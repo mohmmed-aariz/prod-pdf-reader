@@ -1,0 +1,322 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String          @id @default(uuid())
+  name          String?
+  email         String          @unique
+  image         String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Admin {
+  id           String        @id @default(uuid())
+  username     String        @unique
+  password     String
+  name         String?
+  role         Role          @default(AGENCY_USER)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  pdfDocuments PdfDocument[]
+  sessions     AdminSession[]
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model AdminSession {
+  sessionToken String   @unique
+  adminId      String
+  expires      DateTime
+  admin        Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([adminId])
+}
+
+model VerificationToken {
+  identifier   String
+  token        String
+  expires      DateTime
+
+  @@id([identifier, token])
+}
+
+model PdfDocument {
+  id            String    @id @default(uuid())
+  title         String
+  description   String?
+  coverImageUrl String?
+  pdfUrl        String
+  pdfAppUrl     String
+  pdfKey        String
+  totalPages    Int
+  pdfPagesUrl   String[]
+  hide          Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  authorId      String
+  size          Int
+  author        Admin     @relation(fields: [authorId], references: [id])
+  pages         PdfPage[]
+
+  @@index([authorId])
+}
+
+model PdfPage {
+  id            String      @id @default(uuid())
+  title         String
+  pageNumber    Int
+  pdfUrl        String
+  pdfAppUrl     String
+  pdfKey        String
+  pdfDocumentId String
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  pdfDocument   PdfDocument @relation(fields: [pdfDocumentId], references: [id])
+
+  @@index([pdfDocumentId])
+}
+
+enum Role {
+  ADMIN
+  AGENCY_USER
+  GUEST
+}
+
+
+
+
+
+// generator client {
+//   provider = "prisma-client-js"
+// }
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+// model User {
+//   id            String          @id @default(uuid())
+//   name          String?
+//   email         String          @unique
+//   image         String?
+//   createdAt     DateTime        @default(now())
+//   updatedAt     DateTime        @updatedAt
+//   accounts      Account[]
+//   sessions      Session[]
+// }
+
+// model Admin {
+//   id           String        @id @default(uuid())
+//   username     String        @unique
+//   password     String
+//   name         String?
+//   role         Role          @default(AGENCY_USER)
+//   createdAt    DateTime      @default(now())
+//   updatedAt    DateTime      @updatedAt
+//   PdfDocuments PdfDocument[]
+//   sessions     AdminSession[]
+// }
+
+// model Account {
+//   userId            String
+//   type              String
+//   provider          String
+//   providerAccountId String
+//   refresh_token     String?
+//   access_token      String?
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String?
+//   session_state     String?
+
+//   createdAt         DateTime @default(now())
+//   updatedAt         DateTime @updatedAt
+
+//   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   @@id([provider, providerAccountId])
+// }
+
+// model Session {
+//   sessionToken String   @unique
+//   userId       String
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+// }
+
+// model AdminSession {
+//   sessionToken String   @unique
+//   adminId      String
+//   expires      DateTime
+//   admin        Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+//   createdAt    DateTime @default(now())
+//   updatedAt    DateTime @updatedAt
+// }
+
+// model VerificationToken {
+//   identifier   String
+//   token        String
+//   expires      DateTime
+
+//   @@id([identifier, token])
+// }
+
+// model PdfDocument {
+//   id            String    @id @default(uuid())
+//   title         String
+//   description   String?
+//   coverImageUrl String?
+//   pdfUrl        String
+//   pdfAppUrl     String
+//   pdfKey        String
+//   totalPages    Int
+//   pdfPagesUrl   String[]
+//   hide          Boolean   @default(false)
+//   createdAt     DateTime  @default(now())
+//   updatedAt     DateTime  @updatedAt
+//   authorId      String
+//   size          Int
+//   author        Admin     @relation(fields: [authorId], references: [id])
+//   pages         PdfPage[]
+// }
+
+// model PdfPage {
+//   id            String      @id @default(uuid())
+//   title         String
+//   pageNumber    Int
+//   pdfUrl        String
+//   pdfAppUrl     String
+//   pdfKey        String
+//   pdfDocumentId String
+//   createdAt     DateTime    @default(now())
+//   updatedAt     DateTime    @updatedAt
+//   pdfDocument   PdfDocument @relation(fields: [pdfDocumentId], references: [id])
+// }
+
+// enum Role {
+//   ADMIN
+//   AGENCY_USER
+//   GUEST
+// }
+
+
+
+
+
+// // generator client {
+// //   provider = "prisma-client-js"
+// // }
+
+// // datasource db {
+// //   provider = "postgresql"
+// //   url      = env("DATABASE_URL")
+// // }
+
+// // model User {
+// //   id        String  @id @default(uuid())
+// //   name      String?
+// //   email     String
+// //   password  String?
+// //   avatarUrl String  @db.Text
+// //   createdAt DateTime @default(now())
+// //   updatedAt DateTime @updatedAt
+// // }
+
+// // model Admin {
+// //   id           String        @id @default(uuid())
+// //   username     String        @unique
+// //   password     String
+// //   name         String?
+// //   role         Role          @default(USER)
+// //   createdAt    DateTime      @default(now())
+// //   updatedAt    DateTime      @updatedAt
+// //   PdfDocuments PdfDocument[]
+// // }
+
+// // model PdfDocument {
+// //   id            String    @id @default(uuid())
+// //   title         String
+// //   description   String?
+// //   coverImageUrl String?
+// //   pdfUrl        String
+// //   pdfAppUrl     String
+// //   pdfKey        String
+// //   totalPages    Int
+// //   pdfPagesUrl   String[]
+// //   hide          Boolean   @default(false)
+// //   createdAt     DateTime  @default(now())
+// //   updatedAt     DateTime  @updatedAt
+// //   authorId      String
+// //   size          Int
+// //   author        Admin     @relation(fields: [authorId], references: [id])
+// //   pages         PdfPage[]
+// // }
+
+// // model PdfPage {
+// //   id            String      @id @default(uuid())
+// //   title         String
+// //   pageNumber    Int
+// //   pdfUrl        String
+// //   pdfAppUrl     String
+// //   pdfKey        String
+// //   pdfDocumentId String
+// //   createdAt     DateTime    @default(now())
+// //   updatedAt     DateTime    @updatedAt
+// //   pdfDocument   PdfDocument @relation(fields: [pdfDocumentId], references: [id])
+// // }
+
+// // enum Role {
+// //   ADMIN
+// //   USER
+// //   GUEST
+// // }
