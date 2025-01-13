@@ -153,13 +153,6 @@ export const NEXT_AUTH = {
 
             return session
         },
-
-        async signIn({user, account, profile}: {user:any, account:any, profile:any}){
-            // console.log("user", user);
-            // console.log("account", account);
-            // console.log("profile", profile)
-            return true;
-        }
     },
     // pages: {
     //     signIn: "/signin"
