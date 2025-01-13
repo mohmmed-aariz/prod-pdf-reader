@@ -81,6 +81,7 @@ export const NEXT_AUTH = {
             // console.log("________")
             token.id = token.sub;
 
+            
             if(user.role){
                 // as the role will exist only for admin table, so in those tokens add role to session token 
                 // but for user the role field is not present so find the user in user's table and send the required session token
@@ -108,6 +109,8 @@ export const NEXT_AUTH = {
 
 
         
+            // console.log("CSRFtoken", token.CSRFtoken)
+            
             return token
         },
 
@@ -127,7 +130,7 @@ export const NEXT_AUTH = {
 
             session.user.role = token.role;
             session.user.id = token.sub;
-
+            
             // console.log("updated session is: ")
             // console.log(session);
 
@@ -144,14 +147,22 @@ export const NEXT_AUTH = {
 
             // session.user.email = user
 
-            console.log("session getting called")
+            // console.log("session getting called")
+            // console.log("SessionToken: ", session.SessionToken)
+
 
             return session
         },
 
+        async signIn({user, account, profile}: {user:any, account:any, profile:any}){
+            // console.log("user", user);
+            // console.log("account", account);
+            // console.log("profile", profile)
+            return true;
+        }
     },
-    pages: {
-        signIn: "/signin"
-    }
+    // pages: {
+    //     signIn: "/signin"
+    // }
 }
 
