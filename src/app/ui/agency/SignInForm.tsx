@@ -32,8 +32,8 @@ export default function SigninForm() {
 
         setLoading(true);
 
-        const result = await signIn('AdminTable', {
-            redirect: true,
+        const result = await signIn('credentials', {
+            redirect: false,
             username,
             password,
             callbackUrl: "/agency"
@@ -66,7 +66,7 @@ export default function SigninForm() {
     <form onSubmit={handleSubmit} className="space-y-3">
       <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
         <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please Sign up to continue.
+          Please Sign in to continue.
         </h1>
         <div className="w-full">
 
@@ -125,9 +125,10 @@ export default function SigninForm() {
 
         <div className="mb-3 mt-5  text-xs font-medium text-gray-500 flex justify-center">
           <p>
-            If already signed up, go on to{" "}
-            <Link href={"/agency"} className="font-bold underline">
-              Login page.{" "}
+            {/* If new user, go on to{" "} */}
+            If not signed up, go on to{" "}
+            <Link href={"/agency/signup"} className="font-bold underline">
+              Signup page.{" "}
             </Link>
           </p>
         </div>

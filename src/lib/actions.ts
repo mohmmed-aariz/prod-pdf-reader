@@ -1,9 +1,9 @@
 "use server";
 
-import { FormStatus } from "react-dom";
 import prisma from "./db";
 import bcryptjs from "bcryptjs";
-import { error } from "console";
+import { getServerSession } from "next-auth";
+import { NEXT_AUTH } from "@/app/api/auth/[...nextauth]/options";
 
 // Actons for Agency
 
@@ -23,7 +23,7 @@ export async function agencySignUp(
   try {
     const hashPassword = await bcryptjs.hash(password, 10);
 
-    const userExists = await prisma.admin.findFirst({
+    const userExists = await prisma.user.findFirst({
       where: {
         username: username,
       },
@@ -36,11 +36,12 @@ export async function agencySignUp(
       };
     }
 
-    const user = await prisma.admin.create({
+    const user = await prisma.user.create({
       data: {
         name: name,
         username: username,
         password: hashPassword,
+        role: "AGENCY_USER"
       },
     });
 
@@ -54,4 +55,10 @@ export async function agencySignUp(
       message: `An error occured while registering the user!`,
     };
   }
+}
+
+export async function getAgencyUser(){
+  const session = await getServerSession(NEXT_AUTH);
+
+  return session
 }
