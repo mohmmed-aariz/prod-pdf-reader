@@ -108,16 +108,19 @@ model PdfDocument {
   pdfAppUrl     String
   pdfKey        String
   totalPages    Int
-  pdfPagesUrl   String[]
+  pdfPagesUrl   String[] 
   hide          Boolean   @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  authorId      String
   size          Int
-  author        Agency    @relation(fields: [authorId], references: [id])
   pages         PdfPage[]
+  authorId String?
+  author    Agency?    @relation(fields: [authorId], references: [id])
 
-  @@index([authorId])
+  // authorId      String
+  // author        Agency    @relation(fields: [authorId], references: [id])
+
+  // @@index([authorId])
 }
 
 model PdfPage {
