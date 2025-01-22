@@ -101,18 +101,18 @@ model Authenticator {
 
 model PdfDocument {
   id            String    @id @default(uuid())
-  title         String
-  description   String?
-  coverImageUrl String?
-  pdfUrl        String
+  title         String  //
+  description   String?  //
+  coverImageUrl String?  
+  pdfUrl        String  
   pdfAppUrl     String
   pdfKey        String
   totalPages    Int
   pdfPagesUrl   String[] 
-  hide          Boolean   @default(false)
+  hide          Boolean   @default(false) //
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  size          Int
+  size          Int 
   pages         PdfPage[]
   authorId String?
   author    Agency?    @relation(fields: [authorId], references: [id])

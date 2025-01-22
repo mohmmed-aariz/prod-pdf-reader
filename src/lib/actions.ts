@@ -72,8 +72,10 @@ export async function getAgencyUser(){
 
 
 
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument, PDFPage } from 'pdf-lib';
 import { utapi } from "@/server/uploadthing";
+import sharp from "sharp";
+import { PdfPage } from "@prisma/client";
 
     
 const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfKey: string, totalPages: number, size: number, authorId?: string, description?: string, coverImageUrl?: string ) => {
@@ -178,10 +180,26 @@ export async function uploadFileAndPages(
   const session = await getServerSession(NEXT_AUTH);
   const authorId = session?.user.id || "";
   const authorRole = session?.user.role;
+  let coverImageResUrl = '';
 
   console.log("inside uploadFiles server session")
 
   console.log("File name: ", formData.get('fileName'));
+
+  // upload cover image 
+  const coverImg = formData.get("coverImg");
+  console.log(coverImg);
+
+  if(coverImg && coverImg instanceof File){
+    const coverImgRes = await uploadCoverImage(coverImg);
+    // const res = await utapi.uploadFiles([coverImg]);
+    // console.log("Uploade Successful: ", res);
+
+    // return res[0].data;
+    coverImageResUrl = coverImgRes?.url || "";
+    console.log(coverImageResUrl);
+  }
+
 
   const files = formData.getAll("files").map((file) => { 
       if (file instanceof File) { 
@@ -267,22 +285,272 @@ async function updatePdfDocumentWithPageUrls(pdfDocumentId: string, pdfPagesUrl:
 
 
 
+export async function uploadCoverImage(file: File) {
+  console.log("on button press called")
+
+  // const coverImg = formData.get("coverImg");
+  // console.log(coverImg);
+
+  if(file && file instanceof File){
+    const res = await utapi.uploadFiles([file]);
+    console.log("Uploade Successful: ", res);
+
+    return res[0].data;
+  }
+
+  
+}
 
 
-// export async function onButtonPress() {
-//   console.log("on button press called")
-//   const res = await prisma.pdfDocument.create({
-//       data: {
-//           title: "title",
-//           description: "description",
-//           coverImageUrl: "coverImageUrl",
-//           pdfUrl: "pdfUrl",
-//           pdfAppUrl: "pdfAppUrl",
-//           pdfKey: "pdfKey",
-//           totalPages: 11,
-//           // hide: true,
-//           size: 11,
-//       }
+
+export async function onButtonPress(formData: FormData) {
+  console.log("on button press called")
+  // const res = await prisma.pdfDocument.create({
+  //     data: {
+  //         title: "title",
+  //         description: "description",
+  //         coverImageUrl: "coverImageUrl",
+  //         pdfUrl: "pdfUrl",
+  //         pdfAppUrl: "pdfAppUrl",
+  //         pdfKey: "pdfKey",
+  //         totalPages: 11,
+  //         // hide: true,
+  //         size: 11,
+  //     }
+  // })
+  // console.log(res);
+
+
+  const coverImg = formData.get("coverImg");
+  console.log(coverImg);
+
+  if(coverImg && coverImg instanceof File){
+    const res = await utapi.uploadFiles([coverImg]);
+    console.log("Uploade Successful res: ", res);
+
+    const arrayBuffer = await coverImg.arrayBuffer();
+    const resizedImg = await sharp(arrayBuffer).resize(150, null, {withoutEnlargement: true, fit: "inside"}).withMetadata().jpeg({quality: 80}).toBuffer();
+  
+    // const resResized = await utapi.uploadFiles(resizedImg);
+    // Convert the resized buffer to a new Blob/File
+    const resizedFile = new File([resizedImg], coverImg.name, { type: coverImg.type });
+
+    // Upload the resized image using utapi
+    const resResized = await utapi.uploadFiles([resizedFile]);
+    console.log("Upload Successful resResized: ", resResized);
+    // return res[0].data;
+  }
+
+}
+
+
+
+// // import Poppler from "node-poppler";
+// import { pdf } from "pdf-to-img";
+// import * as pdfjsLib from 'pdfjs-dist'
+
+// pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.js';
+
+// export async function pdfToImg(formData: FormData){
+//   console.log("inside pdfToImg")
+//   const files = formData.getAll("files").map((file) => { 
+//       if (file instanceof File) { 
+//           return file; 
+//       } 
+      
+//       throw new Error("Invalid file type"); 
+//   }); 
+
+//   const firstFile = files[0];
+//   const arrayBuffer = await firstFile.arrayBuffer();
+//   const fileBuffer = Buffer.from(arrayBuffer);
+
+//   const images = await pdf(fileBuffer);
+//   console.log(images);
+
+// }
+
+
+
+// import * as pdfjsLib from 'pdfjs-dist'
+// import { createCanvas } from 'canvas';
+
+// // Set the PDF.js worker source from the CDN 
+// pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.7.570/pdf.worker.min.js';
+
+// export async function convertPdfPageToImg(formData: FormData){
+//   const files = formData.getAll("files").map((file)=> {
+//     if( file instanceof File){
+//       return file
+//     }
+
+//     throw new Error("Invalid file type")
 //   })
-//   console.log(res);
+
+//   const firstFile = files[0];
+
+//   const fileBuffer = await firstFile.arrayBuffer();
+//   // const pdfDoc = await PDFDocument.load(fileBuffer);
+//   // const pages = pdfDoc.getPages();
+//   // const pdf = await pdfjsLib.getDocument({data: fileBuffer}).promise;
+//   const pdf = await pdfjsLib.getDocument({data: fileBuffer}).promise;
+//   const imageBuffers = [];
+
+//   for(let i = 0; i < pdf.numPages; i++){
+//     const page = await pdf.getPage(i);
+//     const viewport = page.getViewport({ scale: 1.5 });
+//     const canvas = createCanvas(viewport.width, viewport.height);
+//     const ctx = canvas.getContext('2d') as any;
+
+//     await page.render({ canvasContext: ctx, viewport }).promise;
+//     const buffer = await sharp(canvas.toBuffer()).png().toBuffer();
+//     imageBuffers.push(buffer);
+//   }
+
+//   // Prepare the files for uploading
+//   const filesToUpload = imageBuffers.map((buffer, index) => {
+//     const file = new File([buffer], `page_${index + 1}.png`, { type: 'image/png' });
+//     return file;
+//   })
+
+//   const response = await utapi.uploadFiles(filesToUpload);
+//   console.log(response);
+
+
+// }
+
+// ____________________________________
+
+// import { createCanvas } from 'canvas';
+
+// // export async function convertPdfPageToImg(formData: FormData) {
+// //   const files = formData.getAll("files").map((file) => {
+// //     if (file instanceof File) {
+// //       return file;
+// //     }
+// //     throw new Error("Invalid file type");
+// //   });
+
+// //   const firstFile = files[0];
+// //   const arrayBuffer = await firstFile.arrayBuffer();
+// //   const pdfDoc = await PDFDocument.load(arrayBuffer);
+
+// //   const pages = pdfDoc.getPages();
+// //   const imageBuffers = [];
+
+// //   for (const page of pages) {
+// //     const viewport = {
+// //       width: page.getWidth(),
+// //       height: page.getHeight(),
+// //     };
+// //     const canvas = createCanvas(viewport.width, viewport.height);
+// //     const ctx = canvas.getContext('2d');
+
+// //     // Here you would render the PDF page onto the canvas
+// //     // This step requires custom rendering code
+
+// //     const buffer = await sharp(canvas.toBuffer()).png().toBuffer();
+// //     imageBuffers.push(buffer);
+// //   }
+
+// //   const filesToUpload = imageBuffers.map((buffer, index) => {
+// //     const file = new File([buffer], `page_${index + 1}.png`, { type: 'image/png' });
+// //     return file;
+// //   });
+
+// //   const response = await utapi.uploadFiles(filesToUpload);
+// //   console.log(response);
+// // }
+
+
+// export async function convertPdfPageToImg(formData: FormData) {
+//   const files = formData.getAll("files").map((file) => {
+//     if (file instanceof File) {
+//       return file;
+//     }
+//     throw new Error("Invalid file type");
+//   });
+
+//   const firstFile = files[0];
+//   const arrayBuffer = await firstFile.arrayBuffer();
+//   const pdfDoc = await PDFDocument.load(arrayBuffer);
+//   const pages = pdfDoc.getPages();
+//   const imageBuffers = [];
+
+//   for (const page of pages) {
+//     const viewport = {
+//       width: page.getWidth(),
+//       height: page.getHeight(),
+//     };
+//     const canvas = createCanvas(viewport.width, viewport.height);
+//     const ctx = canvas.getContext('2d');
+
+//     // Render the PDF page onto the canvas
+//     ctx.fillStyle = 'white';
+//     ctx.fillRect(0, 0, viewport.width, viewport.height);
+//     const textContent = await page.getTextContent();
+//     textContent.items.forEach(item => {
+//       const { str, transform } = item;
+//       const [fontSize, , , , x, y] = transform;
+//       ctx.font = `${fontSize}px sans-serif`;
+//       ctx.fillText(str, x, y);
+//     });
+
+//     const buffer = await sharp(canvas.toBuffer()).png().toBuffer();
+//     imageBuffers.push(buffer);
+//   }
+
+//   const filesToUpload = imageBuffers.map((buffer, index) => {
+//     const file = new File([buffer], `page_${index + 1}.png`, { type: 'image/png' });
+//     return file;
+//   });
+
+//   const response = await utapi.uploadFiles(filesToUpload);
+//   console.log(response);
+// }
+
+// import { createCanvas } from 'canvas';
+// import * as pdfjsLib from 'pdfjs-dist';
+
+// // pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@2.16.105/build/pdf.worker.min.js';
+// pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js"
+
+// export async function convertPdfPageToImg(formData: FormData) {
+//   const files = formData.getAll("files").map((file) => {
+//     if (file instanceof File) {
+//       return file;
+//     }
+//     throw new Error("Invalid file type");
+//   });
+
+//   const firstFile = files[0];
+
+//   // Convert the PDF to images
+//   const fileBuffer = await firstFile.arrayBuffer();
+//   const loadingTask = pdfjsLib.getDocument({ data: fileBuffer });
+//   const pdf = await loadingTask.promise;
+//   const imageBuffers = [];
+
+//   for (let i = 1; i <= pdf.numPages; i++) {
+//     const page = await pdf.getPage(i);
+//     const viewport = page.getViewport({ scale: 1.5 });
+//     const canvas = createCanvas(viewport.width, viewport.height);
+//     const ctx = canvas.getContext('2d') as any;
+
+//     await page.render({ canvasContext: ctx, viewport }).promise;
+//     const buffer = await sharp(canvas.toBuffer()).png().toBuffer();
+//     imageBuffers.push(buffer);
+//   }
+
+//   // Prepare the files for uploading
+//   const filesToUpload = imageBuffers.map((buffer, index) => {
+//     const file = new File([buffer], `page_${index + 1}.png`, { type: 'image/png' });
+//     return file;
+//   });
+
+//   // Upload the files using UploadThing (UTAPI)
+//   const response = await utapi.uploadFiles(filesToUpload);
+//   console.log("Upload Successful:", response);
+
+//   // return response;
 // }

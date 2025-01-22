@@ -33,7 +33,7 @@ export default function Form() {
           </label>
           <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
             <div className="flex   items-center">
-              <input name='files' type='file' />
+              <input name='files' type='file' accept="application/pdf" />
             
             {/* <UploadDropzone
                     endpoint="pdfUploader"
@@ -97,7 +97,7 @@ export default function Form() {
           </div>
         </div>
 
-        {/* Invoice Amount */}
+        {/* File description */}
         <div className="mb-4">
           <label htmlFor="amount" className="mb-2 block text-sm font-medium ">
             File Description
@@ -107,10 +107,10 @@ export default function Form() {
           <div className="relative mt-2 rounded-md">
             <div className="relative">
               <input
-                id="amount"
-                name="amount"
+                id="fileDescription"
+                name="fileDescription"
                 type="text"
-                placeholder="Enter File Name"
+                placeholder="Enter File Description"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 // required
                 aria-describedby='customer-error'
@@ -124,6 +124,35 @@ export default function Form() {
                 </p>
               ))} */}
             </div>
+          </div>
+        </div>
+
+        {/* Choose cover image */}
+        <div className="mb-4">
+          <label htmlFor="customer" className="mb-2 block text-sm font-medium">
+            Cover Image
+          </label>
+          <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
+            <div className="flex   items-center">
+              {/* <input name='files' type='file' /> */}
+              <input  name="coverImg" type="file" accept="image/*"/>
+           
+            </div>
+            <div id="customer-error" aria-live='polite' aria-atomic="true">
+            {/* {state.errors?.status && state.errors.status.map((error: string) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))} */}
+          </div>
+          </div>
+     
+          <div id="customer-error" aria-live='polite' aria-atomic="true">
+            {/* {state.errors?.customerId && state.errors.customerId.map((error: string) => (
+              <p className="mt-2 text-sm text-red-500" key={error}>
+                {error}
+              </p>
+            ))} */}
           </div>
         </div>
 

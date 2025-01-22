@@ -1,14 +1,16 @@
 import { lusitana } from "@/app/ui/fonts";
-import { BookOpenIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, GlobeAltIcon } from "@heroicons/react/24/outline";
 
 export default function AppLogo() {
   return (
     <div
-      className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
-    >
-      <BookOpenIcon className="h-12 w-12 rotate-[15deg]" />
+      // className={`${lusitana.className} flex flex-row items-center leading-none text-white`}
+      className={`${lusitana.className} flex flex-row items-center leading-none text-black font-bold`}
 
-      <p className="text-[44px]">Logo</p>
+    >
+      <GlobeAltIcon className="h-8 w-8 rotate-[15deg]" />
+
+      <p className="text-[26px] ">Logo</p>
     </div>
   );
 }
