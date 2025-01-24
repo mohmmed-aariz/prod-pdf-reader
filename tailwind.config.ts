@@ -8,13 +8,13 @@ export default withUt({
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  // theme: {
-  //   extend: {
-  //     minWidth: {
-  //       'full-vh': '100vh'
-  //     }
-  //   }
-  // }
+  theme: {
+    extend: {
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #0f0c29, #302b63, #24243e)'      
+      }
+    }
+  }
 })
 
 
