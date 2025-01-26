@@ -9,8 +9,8 @@ export default async function Page(){
                 { label: "Content", href: '/agency/content'},
                 { label: "Add Content", href: "/agency/content/create", active: true},
             ]} />
-            {/* <Form /> */}
-            <Server />
+            <Form />
+            {/* <Server /> */}
         </main>
     )
 }

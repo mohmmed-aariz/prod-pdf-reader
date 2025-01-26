@@ -76,35 +76,65 @@ import { PDFDocument, PDFPage } from 'pdf-lib';
 import { utapi } from "@/server/uploadthing";
 import sharp from "sharp";
 import { PdfPage } from "@prisma/client";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
     
-const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfKey: string, totalPages: number, size: number, authorId?: string, description?: string, coverImageUrl?: string ) => {
+const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfKey: string, totalPages: number, size: number, authorId?: string, coverImageUrl?: string, description?: string , hide?: boolean  ) => {
   console.log("inside addPdfToDb");
-  // console.log({
-  //   title,
-  //   description,
-  //   coverImageUrl,
-  //   pdfUrl,
-  //   pdfAppUrl,
-  //   pdfKey,
-  //   totalPages,
-  //   size
-  // })
-  const res = await prisma.pdfDocument.create({
-    data: {
-      title,
-      description,
-      coverImageUrl,
-      pdfUrl,
-      pdfAppUrl,
-      pdfKey,
-      totalPages,
-      size,
-      authorId: '496ec52f-2510-491b-95f7-4af17f8d0d7d'
-    }
+  console.log("Data to upload is: ", {
+    title,
+    description,
+    coverImageUrl,
+    pdfUrl,
+    pdfAppUrl,
+    pdfKey,
+    totalPages,
+    size,
+    authorId,
+    hide
   })
 
-  return res;
+  try {
+    console.log("inside try block");
+    const res = await prisma.pdfDocument.create({
+      data: {
+        title,
+        description,
+        coverImageUrl,
+        pdfUrl,
+        pdfAppUrl,
+        pdfKey,
+        totalPages,
+        size,
+        authorId,
+        hide
+      }
+    })
+    console.log(res);
+    return res;
+
+  } catch (error) {
+    // console.log("DB error: ", error)
+      return {id: '1', error}
+  }
+  // const res = await prisma.pdfDocument.create({
+  //   data: {
+  //     title,
+  //     description,
+  //     coverImageUrl,
+  //     pdfUrl,
+  //     pdfAppUrl,
+  //     pdfKey,
+  //     totalPages,
+  //     size,
+  //     authorId,
+  //     hide
+  //   }
+  // })
+  // console.log(res);
+
+  // return res;
 }
 
 
@@ -124,7 +154,8 @@ export const addPdfPagesToDb = async (title: string, pageNumber: number, pdfUrl:
   return newFile;   
 }
 
-export async function uploadFirstFilePagesLite(firstFile: File, userId: string, docId: string ) {
+export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) {
+  // replace docId with fileName
   console.log("inside uploadFiles server session lite");
 
   const fileBuffer = await firstFile.arrayBuffer();
@@ -173,14 +204,121 @@ export async function uploadFirstFilePagesLite(firstFile: File, userId: string, 
 }
 
 
+
+
+
+
+
+
+
+// export async function uploadFileAndPages(  
+//   currentState: { success: boolean; message: string },
+//   formData: FormData
+// ) {
+
+//   const session = await getServerSession(NEXT_AUTH);
+//   const userId = session?.user.id || "";
+
+
+//   const agencyInfo = await prisma.agency.findFirst({
+//     where: {
+//       userId: userId
+//     }
+//   })
+
+//   console.log("agency info is: ",agencyInfo);
+
+//   // // let count = 0;
+//   // // for (let i = 0; i < 10000000000; i++) {
+//   // //   count++;
+//   // // }
+
+  
+//   // // to get file description
+//   // let description = '';
+//   // const fileDescription = formData.get("fileDescription"); 
+//   // if(fileDescription){
+//   //   description = fileDescription.toString();
+//   // }
+//   // console.log("File description is : ", description);
+
+//   // const status = formData.get('status');
+//   // let hide = (status === 'hide')? (true) : (false);
+
+//   // console.log("Status is: ", status)
+//   // console.log("Hide is : ", hide);
+
+//   // const dataToUpload = {
+//   //   title: "December'24 edition",
+//   //   description: 'this is e-magazine for December edition',
+//   //   coverImageUrl: 'https://utfs.io/f/hZVG1XIiCNlA1ZzfDh24WKwxTkCYnHXDIAPe0St7BfsUOpyZ',
+//   //   pdfUrl: 'https://utfs.io/f/hZVG1XIiCNlAwzlOkY96xRDvGhTEdgO2m8fUs4n9aPLZJYFo',
+//   //   pdfAppUrl: 'https://utfs.io/a/smkhor7zi7/hZVG1XIiCNlAwzlOkY96xRDvGhTEdgO2m8fUs4n9aPLZJYFo',
+//   //   pdfKey: 'hZVG1XIiCNlAwzlOkY96xRDvGhTEdgO2m8fUs4n9aPLZJYFo',
+//   //   totalPages: 25,
+//   //   size: 33809738,
+//   //   authorId: '496ec52f-2510-491b-95f7-4af17f8d0d7d',
+//   //   hide: true
+//   // }
+//   // console.log("Uploading started!");
+//   // const dbRes = await addPdfToDb(dataToUpload.title, dataToUpload.pdfUrl, dataToUpload.pdfAppUrl, dataToUpload.pdfKey, dataToUpload.totalPages, dataToUpload.size, dataToUpload.authorId, dataToUpload.coverImageUrl, dataToUpload.description, dataToUpload.hide);
+  
+//   // console.log("result: ", dbRes)
+
+
+//   return {
+//     success: true,
+//     message: "message"
+//   }
+// }
+
+
+
+
+
 export async function uploadFileAndPages(  
   currentState: { success: boolean; message: string },
   formData: FormData
 ) {
   const session = await getServerSession(NEXT_AUTH);
-  const authorId = session?.user.id || "";
+  const userId = session?.user.id || "";
+
+
+  const agencyInfo = await prisma.agency.findFirst({
+    where: {
+      userId: userId
+    }
+  })
+
+  console.log("agency info is: ",agencyInfo);
+  const authorId = agencyInfo?.id ;
+
+  // const authorIdAgency = agencyInfo
   const authorRole = session?.user.role;
   let coverImageResUrl = '';
+
+  // to set the status of the file 
+  const status = formData.get('status');
+  let hide = (status === 'hide')? (true) : (false);  
+  console.log("Status is: ", status)
+  console.log("Hide: ", hide);
+
+  // to get file name 
+  let fileName = '';
+  const fileFormName = formData.get("fileName");
+  if(fileFormName){
+    fileName = fileFormName.toString();
+  }
+  console.log("file name is: ", fileName);
+
+  // to get file description
+  let description = '';
+  const fileDescription = formData.get("fileDescription"); 
+  if(fileDescription){
+    description = fileDescription.toString();
+  }
+  console.log("File description is : ", description);
+  
 
   console.log("inside uploadFiles server session")
 
@@ -188,7 +326,8 @@ export async function uploadFileAndPages(
 
   // upload cover image 
   const coverImg = formData.get("coverImg");
-  console.log(coverImg);
+
+  console.log("Cover image:",coverImg);
 
   if(coverImg && coverImg instanceof File){
     const coverImgRes = await uploadCoverImage(coverImg);
@@ -197,8 +336,9 @@ export async function uploadFileAndPages(
 
     // return res[0].data;
     coverImageResUrl = coverImgRes?.url || "";
-    console.log(coverImageResUrl);
+    console.log("Cover image url: ",coverImageResUrl);
   }
+
 
 
   const files = formData.getAll("files").map((file) => { 
@@ -216,23 +356,28 @@ export async function uploadFileAndPages(
 
   const totalPages = pdfDoc.getPageCount();
 
+  console.log("Uploading doc file");
   const response = await utapi.uploadFiles(firstFile); 
   const dataToUpload = response.data;
-  console.log("Response", response);
+  console.log("Response of file Upload", response);
   
+  // if file name is not given in the form, then take it from the pdf file
+  if(!fileName){
+    fileName = dataToUpload?.name || "";
+  }
 
   try {
       if(dataToUpload){
-        console.log("inside dataToUpload");
+        console.log("inside dataToUpload in DB");
           // uploading file to db
           // const dbRes = await addPdfToDb(dataToUpload?.name , dataToUpload?.key , dataToUpload?.url , dataToUpload?.appUrl , authorId , dataToUpload?.size, totalPages )
-          const dbRes = await addPdfToDb(dataToUpload.name, dataToUpload.url, dataToUpload.appUrl, dataToUpload.key, totalPages, dataToUpload.size, authorId);
+          const dbRes = await addPdfToDb(fileName, dataToUpload.url, dataToUpload.appUrl, dataToUpload.key, totalPages, dataToUpload.size, authorId, coverImageResUrl, description, hide);
           console.log("dbRes: ", dbRes);
           // const dbRes = {"id": 2};
 
           if(dbRes){
               // uploading pages to db
-              const pdfPagesUrl = await uploadFirstFilePagesLite(firstFile , authorId, dbRes.id );
+              const pdfPagesUrl = await uploadFirstFilePagesLite(firstFile , dbRes.id );
               // how to add pdfPagesUrl to PdfDocument table
               await updatePdfDocumentWithPageUrls(dbRes.id, pdfPagesUrl);
               console.log("Upload Successful!");
@@ -286,7 +431,7 @@ async function updatePdfDocumentWithPageUrls(pdfDocumentId: string, pdfPagesUrl:
 
 
 export async function uploadCoverImage(file: File) {
-  console.log("on button press called")
+  console.log("Uploading Cover Image")
 
   // const coverImg = formData.get("coverImg");
   // console.log(coverImg);
@@ -340,8 +485,96 @@ export async function onButtonPress(formData: FormData) {
     console.log("Upload Successful resResized: ", resResized);
     // return res[0].data;
   }
-
 }
+
+
+
+export async function updateDocument(  
+  currentState: { success: boolean; message: string },
+  formData: FormData
+){
+  // zod validation on data
+
+  const fileName = formData.get("fileName")?.toString() ;
+  const fileDescription = formData.get("fileDescription")?.toString();
+  const status = formData.get("status");
+  const id = formData.get("id")?.toString();
+  const booleanStatus = status === 'hidden';
+  console.log("Status original: ", status)
+  console.log("Status: ", booleanStatus);
+
+
+  try {
+    const res = await prisma.pdfDocument.update({
+      where: {  id },
+      data: {
+        title: fileName ,
+        description: fileDescription,
+        hide: booleanStatus
+      }
+    })
+    return {
+      success: true,
+      message: ""
+    }
+
+    // return res;
+  } catch (error) {
+    return {
+      success: false,
+      message: "Database Error: Failed to Update Invoice."
+    }
+  }
+
+  // revalidatePath('/dashboard/invoices');
+  // redirect('/dashboard/invoices');
+}
+
+
+
+export async function deleteDocument(id: string){
+  console.log("Inside deleteDocument");
+
+  const res = await utapi.deleteFiles("https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlAXvY7cdum8ClrHANY4eJcuy9g7wOPkd3hi5GM");
+
+  console.log("deleted file:: ", res);
+
+  // return res;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

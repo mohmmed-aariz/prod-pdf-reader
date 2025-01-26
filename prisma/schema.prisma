@@ -109,6 +109,7 @@ model PdfDocument {
   pdfKey        String
   totalPages    Int
   pdfPagesUrl   String[] 
+  // pdfPagesKey String[]
   hide          Boolean   @default(false) //
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
