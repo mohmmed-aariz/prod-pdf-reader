@@ -6,8 +6,8 @@ export default function ImageCardComp(){
         <div className="relative h-32 w-32 flex-shrink-0 border border-black rounded-lg overflow-hidden ">
             <Image className="" 
             // src="/architect.jpg" 
-            // src="/landingPage.jpg"
-            src='/image.png'
+            src="/landingPage.jpg"
+            // src='/image.png'
             alt="Product Image" 
             // height={48} width={48} 
             fill

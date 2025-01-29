@@ -4,7 +4,7 @@ import CDisplay from "./CDisplay";
 import { loadPdfPage } from "@/lib/userActions";
 
 export default function CMapping() {
-    // console.log("Cmapping getting called");
+    console.log("Cmapping getting called");
     // const arrUrl = [
     //     "https://utfs.io/a/omia6ie4wa/QHWVkOc63xDR6xJ9iWtj3PGd9FLhocAxNnRtyWlTbk6zV8Eg",
     //     "https://utfs.io/a/omia6ie4wa/QHWVkOc63xDRKJDmZuko8Aeds6YDuRnX7vzhf5w0FJy1mEoW",
@@ -52,7 +52,6 @@ export default function CMapping() {
     //     'https://utfs.io/a/smkhor7zi7/hZVG1XIiCNlASLrJSFqfpkQ67KLRJ2nvgcrqHV9MyZeTGIbo',
     //     'https://utfs.io/a/smkhor7zi7/hZVG1XIiCNlAjkLmkuUGVF0dDr31o5kLX6Q9vPTMigKIzp7x'
     //   ]
-    
 
     const arrUrl = [
         'https://utfs.io/a/smkhor7zi7/hZVG1XIiCNlACFv5XfYkuMATx2zOBEgovd5RacJPi09H6SK8',
@@ -84,7 +83,6 @@ export default function CMapping() {
 
     const [pdfStringArray, setPdfStringArray] = useState<string[]>([]);
     const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-    const [num, setNum] = useState<number>(3);
 
     useEffect(() => {
         const fetchPdfPage = async (index: number) => {
@@ -104,28 +102,13 @@ export default function CMapping() {
         }
     }, [currentIndex]);
 
-    useEffect(()=>{
-        console.log(num);
-    }, [num])
-
-
-
     return (
-        <div className="w-full h-full bg-slate-400">
-            <div className="flex flex-row justify-center">
-                <div className="border border-gray-950 p-3 bg-slate-500" onClick={()=>{
-                    if(num > 0)
-                    setNum(num - 1)
-                    }}>+</div>
-                <div className="border border-gray-950 p-3 bg-slate-500" onClick={()=>{
-                    if(num < 7)
-                    setNum(num + 1)}}>-</div>
-            </div>
+        <div className="w-full h-full ">
             {pdfStringArray.length > 0 ? (
                 <div>
                     {pdfStringArray.map((pdfPageString, index) => (
                         <div key={index} className="py-4"> {/* Add margin-y to separate the documents */}
-                            <CDisplay base64string={pdfPageString} pgNum={index} num={num} />
+                            <CDisplay base64string={pdfPageString} pgNum={index} />
                         </div>
                     ))}
                 </div>

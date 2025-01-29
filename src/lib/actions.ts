@@ -80,12 +80,13 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
     
-const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfKey: string, totalPages: number, size: number, authorId?: string, coverImageUrl?: string, description?: string , hide?: boolean  ) => {
+const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfKey: string, totalPages: number, size: number, authorId?: string, coverImageUrl?: string, coverImageKey?: string, description?: string , hide?: boolean  ) => {
   console.log("inside addPdfToDb");
   console.log("Data to upload is: ", {
     title,
     description,
     coverImageUrl,
+    coverImageKey,
     pdfUrl,
     pdfAppUrl,
     pdfKey,
@@ -102,6 +103,7 @@ const addPdfToDb = async (title: string, pdfUrl: string, pdfAppUrl: string, pdfK
         title,
         description,
         coverImageUrl,
+        coverImageKey,
         pdfUrl,
         pdfAppUrl,
         pdfKey,
@@ -154,7 +156,7 @@ export const addPdfPagesToDb = async (title: string, pageNumber: number, pdfUrl:
   return newFile;   
 }
 
-export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) {
+export async function uploadFirstFilePagesLite(firstFile: File, docId: string, fileName: string ) {
   // replace docId with fileName
   console.log("inside uploadFiles server session lite");
 
@@ -162,11 +164,13 @@ export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) 
   const pdfDoc = await PDFDocument.load(fileBuffer);
 
   const totalPages = pdfDoc.getPageCount();
-  const fileName = pdfDoc;
+  // const fileName = pdfDoc;
   // console.log(fileName);
+  const sanitizedFileName = fileName.replace(/\s/g, '_');
   console.log(`Total Pages: ${totalPages}`);
 
   const pageUrlArr = [];
+  const pageKeyArr = [];
 
   for (let i = 0; i < totalPages; i++) {
       const newPdf = await PDFDocument.create();
@@ -175,10 +179,14 @@ export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) 
 
       const pdfBytes = await newPdf.save();
       const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-      const newFile = new File([blob], `${docId}_page_${i + 1}.pdf`, { type: 'application/pdf' });
+      // const newFile = new File([blob], `${docId}_page_${i + 1}.pdf`, { type: 'application/pdf' });
+      const newFile = new File([blob], `${sanitizedFileName}_page_${i + 1}.pdf`, { type: 'application/pdf' });
+
 
       console.log(`Uploading page ${i + 1}`);
-      const pdfPageTitle = `${docId}_${i+1}`;
+      // const pdfPageTitle = `${docId}_${i+1}`;
+      const pdfPageTitle = `${sanitizedFileName}_${i+1}`;
+
       const response = await utapi.uploadFiles(newFile);
 
       // const dataToUpload = response[0].data;
@@ -192,6 +200,7 @@ export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) 
               const dbRes = await addPdfPagesToDb(pdfPageTitle,i+1,dataToUpload.url, dataToUpload.appUrl, dataToUpload.key, docId)
               // console.log(dbRes);
               pageUrlArr.push(dbRes.pdfAppUrl);
+              pageKeyArr.push(dbRes.pdfKey);
           }
       } catch (err) {
           throw new Error("Error while uploading the document to DB");
@@ -199,7 +208,9 @@ export async function uploadFirstFilePagesLite(firstFile: File, docId: string ) 
   }
 
   console.log("Page url array: ", pageUrlArr);
-  return pageUrlArr;
+  console.log("Page key array: ", pageKeyArr);
+
+  return [pageUrlArr, pageKeyArr];
   
 }
 
@@ -296,6 +307,7 @@ export async function uploadFileAndPages(
   // const authorIdAgency = agencyInfo
   const authorRole = session?.user.role;
   let coverImageResUrl = '';
+  let coverImageResKey = '';
 
   // to set the status of the file 
   const status = formData.get('status');
@@ -336,7 +348,9 @@ export async function uploadFileAndPages(
 
     // return res[0].data;
     coverImageResUrl = coverImgRes?.url || "";
+    coverImageResKey = coverImgRes?.key || "";
     console.log("Cover image url: ",coverImageResUrl);
+    console.log("Cover image key: ",coverImageResKey);
   }
 
 
@@ -371,15 +385,15 @@ export async function uploadFileAndPages(
         console.log("inside dataToUpload in DB");
           // uploading file to db
           // const dbRes = await addPdfToDb(dataToUpload?.name , dataToUpload?.key , dataToUpload?.url , dataToUpload?.appUrl , authorId , dataToUpload?.size, totalPages )
-          const dbRes = await addPdfToDb(fileName, dataToUpload.url, dataToUpload.appUrl, dataToUpload.key, totalPages, dataToUpload.size, authorId, coverImageResUrl, description, hide);
+          const dbRes = await addPdfToDb(fileName, dataToUpload.url, dataToUpload.appUrl, dataToUpload.key, totalPages, dataToUpload.size, authorId, coverImageResUrl,coverImageResKey, description, hide);
           console.log("dbRes: ", dbRes);
           // const dbRes = {"id": 2};
 
           if(dbRes){
               // uploading pages to db
-              const pdfPagesUrl = await uploadFirstFilePagesLite(firstFile , dbRes.id );
+              const [pdfPagesUrl, pdfPagesKey] = await uploadFirstFilePagesLite(firstFile , dbRes.id, fileName );
               // how to add pdfPagesUrl to PdfDocument table
-              await updatePdfDocumentWithPageUrls(dbRes.id, pdfPagesUrl);
+              await updatePdfDocumentWithPageUrls(dbRes.id, pdfPagesUrl, pdfPagesKey);
               console.log("Upload Successful!");
               
               return {
@@ -416,13 +430,14 @@ export async function uploadFileAndPages(
 }
 
 
-async function updatePdfDocumentWithPageUrls(pdfDocumentId: string, pdfPagesUrl: string[]){
+async function updatePdfDocumentWithPageUrls(pdfDocumentId: string, pdfPagesUrl: string[], pdfKeysUrl: string[]){
   await prisma.pdfDocument.update({
       where: {
           id: pdfDocumentId
       },
       data: {
-          pdfPagesUrl: pdfPagesUrl
+          pdfPagesUrl: pdfPagesUrl,
+          pdfPagesKey: pdfKeysUrl
           // pdfPagesUrl: JSON.stringify(pdfPagesUrl),
       }
   })
@@ -535,9 +550,66 @@ export async function updateDocument(
 export async function deleteDocument(id: string){
   console.log("Inside deleteDocument");
 
-  const res = await utapi.deleteFiles("https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlAXvY7cdum8ClrHANY4eJcuy9g7wOPkd3hi5GM");
+  const res = await prisma.pdfDocument.findFirst({
+    where: {
+      id: id
+    },
+    select: {
+      pdfKey: true,
+      coverImageKey: true,
+      pdfPagesKey: true
+    }
+  })
 
-  console.log("deleted file:: ", res);
+  console.log(res);
+
+  const allKeys: string[] = [
+    res?.coverImageKey || '',
+    res?.pdfKey || '',
+    ...res?.pdfPagesKey || [],
+  ].filter(Boolean) ;
+
+  console.log("all keys:: ", allKeys);
+
+  const deleteDataFromUT = await utapi.deleteFiles(allKeys)
+
+  console.log(deleteDataFromUT);
+  // DeleteFileResponse { success: true, deletedCount: 32 }
+
+  if(deleteDataFromUT.success){
+    // res?.pdfPagesKey.map(async (key) => { 
+    //   const pageDeleteRes = await prisma.pdfPage.deleteMany({
+    //     where: {
+    //       pdfKey: {
+    //         in: 
+    //       }
+    //     }
+    //   })
+    // } )
+
+    const pagesDeleteRes = await prisma.pdfPage.deleteMany({
+      where: {
+        pdfKey: {
+          in: res?.pdfPagesKey
+        }
+      }
+    })
+
+    const pdfDeleteRes = await prisma.pdfDocument.delete({
+      where: {
+        pdfKey: res?.pdfKey
+      }
+    })
+    // const coverImageDeleteRes = prisma.pdfDocument.deleteMany({
+    //   where: {
+    //     coverImageKey: res?.coverImageKey 
+    //   }
+    // })
+    
+    console.log("Delete result:: ", pagesDeleteRes, pdfDeleteRes);
+      revalidatePath('/agency/content');
+
+  }
 
   // return res;
 }

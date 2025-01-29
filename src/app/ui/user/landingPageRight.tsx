@@ -1,15 +1,16 @@
-"use client"
-import { useState } from "react"
 import ContentDisplay from "./contentDisplay";
 import ImageCardComp from "./imageCardComp";
+import BookCard from "./bookCard";
+import BookCardDefault from "./bookCardDefault";
+import DisplayContent from "./DisplayContent";
+import Title from "./landingPageTitle";
 
 export default function LandingPageRight(){
-    const [isClamped, setIsClamped] = useState(true);
 
 
     return <div className="flex flex-col h-full w-full px-4 ">
 
-        <div className="flex flex-col border-b border-gray-300 w-11/12">
+        {/* <div className="flex flex-col border-b border-gray-300 w-11/12">
             <h1 className="font-bold text-xl">Solo Leveling</h1>
             <div className="flex">
                 <div 
@@ -22,20 +23,33 @@ export default function LandingPageRight(){
                     Based on the action-fantasy novel that has become a global phenomenon, the highly anticipated comic adaptation arrives with a brand-new official English translation produced by Tappytoon.
                 </div>
             </div>
-        </div>
+        </div> */}
+
+        <Title />
+
         {/* <MarginBottom /> */}
         <div className="mt-2 font-bold text-gray-700">Content</div>
         <div className="my-2 w-full h-full">
+            <DisplayContent />
             {/* Chapters */}
             {/* 
                 Editions: fetch the latest editions from backend and display them using suspense
                 mg_components:: divided based on year
             */}
+            
+            {/* <BookCard />
+            <BookCard />
+            <BookCard />
+            <BookCard /> */}
+            <BookCardDefault />
+            <BookCardDefault />
+            {/* <BookCardDefault /> */}
+
+            {/* <ImageCardComp />
             <ImageCardComp />
             <ImageCardComp />
             <ImageCardComp />
-            <ImageCardComp />
-            <ImageCardComp />
+            <ImageCardComp /> */}
             {/* <ContentDisplay />
             <ContentDisplay /> */}
             
@@ -44,6 +58,3 @@ export default function LandingPageRight(){
     </div>
 }
 
-function MarginBottom(){
-    return <div className="border-b border-gray-300"></div>
-}

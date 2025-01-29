@@ -29,15 +29,19 @@ export function UpdateContent({ id }: { id: string }) {
 }
 
 export function DeleteContent({ id }: { id: string }) {
-    const deleteInvoiceWithId = deleteDocument.bind(null, id);  
+    const deleteDocumentWithId = deleteDocument.bind(null, id); 
+    // console.log("Content id: ", id); 
+    
+
     // deleteDocument()
     return (
-        // <form >
-        <form action={deleteInvoiceWithId}>
-        <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
-            <span className="sr-only">Delete</span>
-            <TrashIcon className="w-4" />
-        </button>
+      <form action={deleteDocumentWithId}>
+        {/* // <form > */}
+          
+          <button type="submit" className="rounded-md border p-2 hover:bg-gray-100">
+              <span className="sr-only">Delete</span>
+              <TrashIcon className="w-4" />
+          </button>
         </form>
     );
 }

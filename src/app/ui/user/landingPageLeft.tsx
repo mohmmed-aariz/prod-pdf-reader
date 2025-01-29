@@ -1,5 +1,4 @@
 import Image from "next/image"
-import landingImage from "../../../../public/image.png"
 import { Button } from "../button"
 import { PlusIcon } from "@heroicons/react/24/outline"
 
@@ -9,12 +8,15 @@ export default function LandingPageLeft(){
         <div className="w-11/12">
             <div className="relative w-full rounded-lg overflow-hidden justify-center aspect-auto ">
                 <Image 
-                    src={landingImage} 
+                    src='/image.png' 
+                    // src='/landingPage.jpg'
                     alt="Description of image" 
                     // width={500} height={300} 
                     // fill
                     // sizes="(max-width: 768px) 100vh, 700px"
                     priority
+                    width={1920}
+                     height={1080}
                     />
             </div>
             <div className="flex flex-row my-4 justify-center">

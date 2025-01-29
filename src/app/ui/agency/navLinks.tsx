@@ -8,7 +8,7 @@ import { usePathname } from "next/navigation"
 const links = [
     { name: 'Home', href: "/agency", icon: HomeIcon},
     { name: "Content", href: "/agency/content", icon: DocumentDuplicateIcon},
-    { name: "Team", href: "/agency", icon: UserGroupIcon}
+    { name: "Editors", href: "/agency/editors", icon: UserGroupIcon}
 ]
 
 export default function NavLinks(){

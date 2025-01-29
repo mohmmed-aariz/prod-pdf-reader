@@ -8,8 +8,10 @@ interface LayoutProps {
 
 export default function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col h-screen w-screen ">
-      <div className="w-screen h-16  px-4">
+    <div className="flex flex-col  ">
+
+    {/* <div className="flex flex-col h-screen w-screen "> */}
+      <div className=" h-16  px-4">
         <NavbarUser />
       </div>
       <div className=" flex-grow bg-slate-600 border-t border-red-400 overflow-auto pt-6">

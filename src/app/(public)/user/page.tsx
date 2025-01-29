@@ -1,7 +1,7 @@
 import LandingPageLeft from "@/app/ui/user/landingPageLeft";
 import LandingPageRight from "@/app/ui/user/landingPageRight";
 
-export default function Page() {
+export default async function Page() {
     return (
       <div className="flex justify-center bg-blue-200 w-full min-h-full">
       {/* // <div className="h-screen flex justify-center bg-blue-200 fixed w-full"> */}

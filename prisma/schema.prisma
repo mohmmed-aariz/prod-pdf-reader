@@ -15,6 +15,7 @@ model User {
   image         String?
   username      String?   @unique
   password      String?
+  // role          Role      
   role          Role      @default(USER)
   // admin Admin? // Optional one-to-one relationship 
   agency        Agency?
@@ -104,12 +105,13 @@ model PdfDocument {
   title         String  //
   description   String?  //
   coverImageUrl String?  
+  coverImageKey String? @unique
   pdfUrl        String  
   pdfAppUrl     String
-  pdfKey        String
+  pdfKey        String  @unique
   totalPages    Int
   pdfPagesUrl   String[] 
-  // pdfPagesKey String[]
+  pdfPagesKey String[]
   hide          Boolean   @default(false) //
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -138,6 +140,18 @@ model PdfPage {
 
   @@index([pdfDocumentId])
 }
+
+// model LandingPageContent {
+//   id String @id @default(uuid())
+//   image_url String?
+//   image_key String?
+//   title String?
+//   description String?
+//   createdAt DateTime @default(now())
+//   updatedAt     DateTime    @updatedAt
+
+
+// }
 
 enum Role {
   ADMIN

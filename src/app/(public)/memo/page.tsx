@@ -7,7 +7,7 @@ export default function Page(){
     return <div >
         {/* PDF */}
         
-        <CMapping />
-        {/* <CombinedComponent /> */}
+        {/* <CMapping /> */}
+        <CombinedComponent />
     </div>
 }
