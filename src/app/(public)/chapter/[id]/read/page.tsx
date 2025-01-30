@@ -8,15 +8,18 @@ export default async function Page({ params }: { params: { id: string } }) {
     // fetch pdf url for download
 
     const documentData = await fetchUserContentUrl(id);
+    // console.log("Document data is : ", documentData);
+    // console.log("Document title is : ", documentData?.title);
+
 
     if(!documentData){
         notFound();
     }
 
     return (
-        <div>
-            Hello from /chapter/[id]/page
-            <CombinedDisplay pdfAppUrl={documentData.pdfAppUrl} pdfPagesUrl={documentData.pdfPagesUrl} totalPages={documentData.totalPages}/>
+        <div >
+            {/* Hello from /chapter/[id]/page */}
+            <CombinedDisplay pdfAppUrl={documentData.pdfAppUrl} pdfPagesUrl={documentData.pdfPagesUrl} totalPages={documentData.totalPages} title={documentData.title}/>
         </div>
     )
 }

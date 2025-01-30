@@ -9,7 +9,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     import.meta.url,
   ).toString();
 
-export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl}: {
+export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, title}: {
+    title: string;
     pdfAppUrl: string;
     totalPages: number;
     pdfPagesUrl: string[];
@@ -32,16 +33,20 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl}: {
             setNum(3);
         } else if (screenWidth < 1280) {
             setNum(4); 
-        } else if (screenWidth < 1440) {
-            setNum(5); 
-        } else if (screenWidth < 1920) {
-            setNum(6); 
+        } else {
+            setNum(6);
         }
+        //  else if (screenWidth < 1440) {
+        //     setNum(5); 
+        // } else if (screenWidth < 1920) {
+        //     setNum(6); 
+        // }
         
     };
 
     useEffect(()=>{
         updateNumBasedOnScreenSize(); // Set num on initial load
+        // console.log("title is: ", title )
 
     }, [])
 
@@ -103,8 +108,10 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl}: {
     ), [pdfStringArray, width]);
 
     return (
-        <div className="w-full h-full bg-slate-400">
-            <div className="flex flex-row justify-center">
+        <div className="w-full h-full ">
+            
+        {/* <div className="w-full h-full bg-gradient-to-r from-gray-900 via-rose-800 to-gray-900"> */}
+            {/* <div className="flex flex-row justify-center border border-black">
                 <button className="border border-gray-950 p-3 bg-slate-500" onClick={() =>{ num < 7 && setNum(num + 1);
                 }}>
                     -
@@ -113,13 +120,26 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl}: {
                     +
                 </button>
                 <DownloadButton url={pdfAppUrl} />
-            </div>
+            </div> */}
+
+            {/* <Appbar num={num} setNum={setNum}/> */}
+            <Appbar num={num} setNum={setNum} pdfAppUrl={pdfAppUrl} title={title} />
+
             {pdfStringArray.length > 0 ? (
                 <div>
                     {memoizedPages}
                 </div>
             ) : (
                 <div>Loading...</div>
+            )}
+            {pdfStringArray.length < totalPages ? (
+                <div className="bg-black text-white flex justify-center">
+                    Loading...
+                </div>
+            ) : (
+                <div className="bg-black text-white flex justify-center">
+                    Completed!
+                </div>            
             )}
         </div>
     );
@@ -129,6 +149,7 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl}: {
 
 
 import React from 'react';
+import Appbar from "./Appbar";
 
 const DownloadButton = ({url}: {url: string}) => {
   const [isLoading, setIsLoading] = useState(false);

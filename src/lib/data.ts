@@ -303,9 +303,10 @@ export async function fetchUserContentUrl(
   try {
     const content = await prisma.pdfDocument.findFirst({
       select: {
+        title: true,
         pdfAppUrl: true,
         pdfPagesUrl: true,
-        totalPages: true
+        totalPages: true,
       },
       where: {
         id: id
