@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import BookImageCard from "./bookImageCard";
+import { useRouter } from "next/navigation";
 
 export default function BookCard({
     id,
@@ -17,12 +18,16 @@ export default function BookCard({
     createdAt: Date 
 }){
     console.log(id, createdAt.getFullYear(), coverImageUrl);
+    const router = useRouter()
+
 
     return (
         <div className="relative flex flex-row justify-start rounded-xl bg-gray-50 shadow-sm overflow-hidden my-2
-         hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50
-        hover:opacity-75
-         ">
+        hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50 hover:opacity-75 cursor-pointer"
+        onClick={()=>{
+            router.push(`/chapter/${id}/read`);
+        }}
+        >
         {/* <div className="relative flex flex-row justify-start rounded-xl bg-gray-50 shadow-sm overflow-hidden my-2
         transition-all delay-0 duration-500 ease-in-out hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50
         hover:opacity-80

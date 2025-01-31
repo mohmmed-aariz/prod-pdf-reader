@@ -1,6 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
@@ -137,12 +138,14 @@ export default function DropdownAvatar({
             </a>
           </li>
           <li>
-            <a
-              href="#"
+            <div
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600  dark:hover:text-white"
+              onClick={()=>{
+                signOut();
+              }}
             >
               Sign out
-            </a>
+            </div>
           </li>
         </ul>
       </div>

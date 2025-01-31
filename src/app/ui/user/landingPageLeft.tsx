@@ -1,8 +1,14 @@
+"use client"
+
 import Image from "next/image"
 import { Button } from "../button"
 import { PlusIcon } from "@heroicons/react/24/outline"
+import { redirect, useRouter } from "next/navigation";
+import { readLatestDocument } from "@/lib/userActions";
 
 export default function LandingPageLeft(){
+    const router = useRouter();
+
     return <div className="flex justify-center h-full">
         
         <div className="w-11/12">
@@ -22,8 +28,15 @@ export default function LandingPageLeft(){
             </div>
             <div className="flex flex-row my-4 justify-center">
                 {/* for less then sm, hide the component and make it visible in bottom */}
-                <button className="w-full justify-center bg-gray-900 py-3 font-bold rounded-lg text-gray-100 	">Start reading</button>
-                <button className=" justify-center border border-gray-900 mx-2 px-3 font-bold rounded-lg  "><PlusIcon height={20} width={20}/></button>
+                <button className="w-full justify-center bg-gray-900 py-3 font-bold rounded-lg text-gray-100 	"
+                    onClick={async ()=>{
+                        const latestDoc = await readLatestDocument()
+                        if(latestDoc){
+                            router.push(`chapter/${latestDoc.id}/read`);
+                        }
+                    }}
+                >Start reading</button>
+                {/* <button className=" justify-center border border-gray-900 mx-2 px-3 font-bold rounded-lg  "><PlusIcon height={20} width={20}/></button> */}
                 
             </div>
         </div>

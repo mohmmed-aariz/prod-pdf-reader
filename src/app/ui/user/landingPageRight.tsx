@@ -31,6 +31,10 @@ export default function LandingPageRight(){
         <div className="mt-2 font-bold text-gray-700">Content</div>
         <div className="my-2 w-full h-full">
             <DisplayContent />
+            <DisplayContent />
+
+            <DisplayContent />
+
             {/* Chapters */}
             {/* 
                 Editions: fetch the latest editions from backend and display them using suspense

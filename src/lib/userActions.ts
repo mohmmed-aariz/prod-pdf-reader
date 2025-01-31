@@ -1,6 +1,7 @@
 import { PDFDocument } from 'pdf-lib';
 
 import axios from 'axios';
+import { fetchLatestDocumentId } from './data';
 
 
 export async function loadPdfPage(pdfUrl: string): Promise<string | null> {
@@ -44,3 +45,10 @@ export async function loadPdfPage(pdfUrl: string): Promise<string | null> {
 }
 
 
+export async function readLatestDocument(){
+  const latestDoc = await fetchLatestDocumentId();
+
+
+  return latestDoc
+  
+}

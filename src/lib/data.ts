@@ -323,3 +323,36 @@ export async function fetchUserContentUrl(
 
   }
 }
+
+
+export async function fetchLatestDocumentId(){
+
+  try {
+    const content = await prisma.pdfDocument.findFirst({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        coverImageUrl: true,
+        createdAt: true,
+        
+      },
+      where: {
+        hide: false,
+        
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+    });
+
+    // console.log(content);
+
+    return content;
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+
+  }
+}

@@ -14,13 +14,11 @@ export default function Title(){
             <h1 className="font-semibold text-2xl uppercase">HIGH PROFILE</h1>
             <div className="flex">
                 <div 
-                    className={`text-slate-500 text-xs  ${isClamped?"line-clamp-2": ""}	hover:text-slate-400 mt-2 mb-3`} 
+                    className={`text-gray-600 text-xs  ${isClamped?"line-clamp-2": ""}	hover:text-gray-500 mt-2 mb-3`} 
                     onClick={()=>{
                         setIsClamped(!isClamped);
                     }}>
-                    [Epilogue now available] 
-                    In a world where awakened beings called “Hunters” must battle deadly monsters to protect humanity, Sung Jinwoo, nicknamed “the weakest hunter of all mankind,” finds himself in a constant struggle for survival. One day, after a brutal encounter in an overpowered dungeon wipes out his party and threatens to end his life, a mysterious System chooses him as its sole player: Jinwoo has been granted the rare opportunity to level up his abilities, possibly beyond any known limits. Follow Jinwoo’s journey as he takes on ever-stronger enemies, both human and monster, to discover the secrets deep within the dungeons and the ultimate extent of his powers.
-                    Based on the action-fantasy novel that has become a global phenomenon, the highly anticipated comic adaptation arrives with a brand-new official English translation produced by Tappytoon.
+                The <strong>High Profile School E-Magazine </strong> is a vibrant and engaging publication that captures the essence of student life, achievements, and creativity. This edition showcases a variety of content, including updates on recent school events, academic and extracurricular accomplishments, and insightful articles that aim to educate and inspire. Featuring creative contributions from students, such as poems, essays, and artwork, the magazine provides a platform for young minds to express themselves. Additionally, it includes interviews, opinion pieces, and fun activities like puzzles and riddles, making it both informative and entertaining. By highlighting the talents and successes of students, the magazine fosters a sense of pride and motivation, encouraging active participation in school activities. It serves as a valuable resource for students, helping them stay connected with their school community while also enhancing their knowledge and creativity.    
                 </div>
             </div>
         </div>
