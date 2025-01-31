@@ -19,6 +19,18 @@ const nextConfig = {
         hostname: 'utfs.io',
         port: '',
         pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'smkhor7zi7.ufs.sh',
+        port: '',
+        pathname: '**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com', // Added domain
+        port: '',
+        pathname: '**'
       }
     ]
   },

@@ -8,7 +8,8 @@ export default function LandingPageLeft(){
         <div className="w-11/12">
             <div className="relative w-full rounded-lg overflow-hidden justify-center aspect-auto ">
                 <Image 
-                    src='/image.png' 
+                    src='/tree.jpg' 
+                    // src={"https://utfs.io/f/hZVG1XIiCNlATopO8iOZP8rndD60aYu9mCQ5FSzsqXwoVAfR"}
                     // src='/landingPage.jpg'
                     alt="Description of image" 
                     // width={500} height={300} 
@@ -16,13 +17,13 @@ export default function LandingPageLeft(){
                     // sizes="(max-width: 768px) 100vh, 700px"
                     priority
                     width={1920}
-                     height={1080}
+                    height={1080}
                     />
             </div>
             <div className="flex flex-row my-4 justify-center">
                 {/* for less then sm, hide the component and make it visible in bottom */}
-                <button className="w-full justify-center bg-zinc-900 py-3 font-bold rounded-lg text-gray-100 	">Start reading</button>
-                <button className=" justify-center border border-zinc-900 mx-2 px-3 font-bold rounded-lg  "><PlusIcon height={20} width={20}/></button>
+                <button className="w-full justify-center bg-gray-900 py-3 font-bold rounded-lg text-gray-100 	">Start reading</button>
+                <button className=" justify-center border border-gray-900 mx-2 px-3 font-bold rounded-lg  "><PlusIcon height={20} width={20}/></button>
                 
             </div>
         </div>

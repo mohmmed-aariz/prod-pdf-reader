@@ -2,9 +2,10 @@ import Link from "next/link";
 import AppLogo from "../app-logo";
 import NavSignupButton from "./navSignupButton";
 
-export default function NavbarUser(){
+export default async function NavbarUser(){
+    
     return (
-        <div className="flex justify-center h-full w-full ">
+        <div className="flex justify-center h-full w-full bg-gray-900 mx-6  lg:mx-8">
             <div className="flex  h-full w-full  xl:w-4/5 transition-all duration-500">
 
                 <div className="flex flex-row justify-start w-full  ">

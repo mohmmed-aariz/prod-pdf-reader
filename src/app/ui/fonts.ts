@@ -13,3 +13,11 @@ export const playfair = Playfair({
   weight:['300', '400', '500'],
   subsets: ['latin']
 })
+
+import { Roboto } from 'next/font/google';
+
+export const roboto = Roboto({
+  weight:[ '400', '500',  '700'],
+  subsets: ['latin']
+})
+

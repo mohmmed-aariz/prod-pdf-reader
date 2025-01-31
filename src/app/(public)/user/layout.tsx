@@ -1,4 +1,6 @@
+import { lusitana } from "@/app/ui/fonts";
 import NavbarUser from "@/app/ui/user/navbar";
+import ServerNavbar from "@/app/ui/user/navbar/serverNavbar";
 
 export const experimental_ppr = true;
 
@@ -6,13 +8,14 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }: LayoutProps) {
+export default async function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col  ">
+    <div className={`flex flex-col ${lusitana.className} antialiased  `}>
 
     {/* <div className="flex flex-col h-screen w-screen "> */}
-      <div className=" h-16  px-4">
-        <NavbarUser />
+      <div className="  ">
+        {/* <NavbarUser /> */}
+        <ServerNavbar />
       </div>
       <div className=" flex-grow bg-slate-600 border-t border-red-400 overflow-auto pt-6">
         {children}

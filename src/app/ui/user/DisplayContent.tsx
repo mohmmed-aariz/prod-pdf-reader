@@ -6,15 +6,15 @@ export default async function DisplayContent(){
     const contentToDisplay = await fetchUserContent('', 1);
     // console.log(contentToDisplay);
     return <div className="w-full h-full bg-slate-400">
-                <div className="flex flex-row justify-center">
+                {/* <div className="flex flex-row justify-center">
                     Hello world
-                </div>
+                </div> */}
                 {contentToDisplay.length > 0 ? (
                     <div>
                         {contentToDisplay.map((document, index) => (
-                            <div key={index} className="py-4"> {/* Add margin-y to separate the documents */}
+                            <div key={index} className=""> {/* Add margin-y to separate the documents */}
                                 <BookCard id={document.id} title={document.title} description={document.description || ""} coverImageUrl={document.coverImageUrl || ""} createdAt={document.createdAt} />
-                                <BookCardDefault />
+                                {/* <BookCardDefault /> */}
                             </div>
                         ))}
                     </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { inter, lusitana, playfair, roboto } from "../fonts";
 
 
 
@@ -9,8 +10,8 @@ export default function Title(){
     const [isClamped, setIsClamped] = useState(true);
     
     return (
-        <div className="flex flex-col border-b border-gray-300 w-11/12">
-            <h1 className="font-bold text-xl">Solo Leveling New</h1>
+        <div className={`flex flex-col border-b border-gray-300 w-11/12 ${lusitana.className} antialiased text-gray-900`}>
+            <h1 className="font-semibold text-2xl uppercase">HIGH PROFILE</h1>
             <div className="flex">
                 <div 
                     className={`text-slate-500 text-xs  ${isClamped?"line-clamp-2": ""}	hover:text-slate-400 mt-2 mb-3`} 

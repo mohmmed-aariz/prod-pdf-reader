@@ -1,9 +1,10 @@
-import Image from "next/image";
 import BookImageCard from "./bookImageCard";
 
 export default function BookCardDefault(){
     return (
-        <div className="transition delay-300 duration-500 ease-out relative flex flex-row  justify-start rounded-xl bg-gray-50   shadow-sm overflow-hidden my-2 hover:bg-black">
+        <div className="  relative flex flex-row  justify-start rounded-xl bg-gray-50   shadow-sm overflow-hidden my-2  
+        transition-all delay-75 duration-500 ease-in-out hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50
+        ">
         {/* <Image 
             // className="mr-2 rounded-md w-[100px] xl:w-[150px] h-[auto] transition-all duration-700"            // src='/image.png'
             className="mr-2 rounded-md w-[100px]  h-[auto]"
