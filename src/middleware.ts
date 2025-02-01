@@ -10,6 +10,11 @@ export async function middleware(request: NextRequest) {
 
     console.log("Token from middleware is:", token);
 
+    // Redirect users from root path '/' to '/user'
+    if (pathname === '/') {
+        return NextResponse.redirect(new URL('/user', request.url));
+    }
+
     // Allow access to /agency/signup and /agency/signin without authentication
     if (pathname.startsWith('/agency/signup') || pathname.startsWith('/agency/signin')) {
         return NextResponse.next();
@@ -45,6 +50,7 @@ export const config = {
     matcher: [
         '/agency/:path*',
         '/register',
+        '/'
     ],
 };
 

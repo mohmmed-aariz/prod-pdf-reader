@@ -15,10 +15,10 @@ export async function agencySignUp(
   const password = formData.get("password") as string;
   const name = formData.get("name") as string;
 
-  let count = 0;
-  for (let i = 0; i < 10000000000; i++) {
-    count++;
-  }
+  // let count = 0;
+  // for (let i = 0; i < 10000000000; i++) {
+  //   count++;
+  // }
 
   try {
     const hashPassword = await bcryptjs.hash(password, 10);
