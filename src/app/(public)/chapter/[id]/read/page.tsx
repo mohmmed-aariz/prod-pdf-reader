@@ -4,7 +4,7 @@ import { fetchUserContentUrl, incrementViewCount, recordView } from "@/lib/data"
 import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params; 
     // fetch pdfPagesUrl from id and here we get array of url, 
     // fetch pdf url for download

@@ -108,7 +108,7 @@ export default function CMapping() {
                 <div>
                     {pdfStringArray.map((pdfPageString, index) => (
                         <div key={index} className="py-4"> {/* Add margin-y to separate the documents */}
-                            <CDisplay base64string={pdfPageString} pgNum={index} />
+                            <CDisplay base64string={pdfPageString} pgNum={index}  num={1}/>
                         </div>
                     ))}
                 </div>

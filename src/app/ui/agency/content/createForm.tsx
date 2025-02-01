@@ -35,7 +35,7 @@ export default function Form() {
 
   // return (
     // <form action={createInvoice}>
-    return ( <form action={formAction} aria-disabled={isPending}>
+    return ( <form action={formAction} >
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Choose File */}
         <div className="mb-4">

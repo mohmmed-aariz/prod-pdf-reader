@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 
-export default function () {
+export default function Page() {
   const { data: session, status } = useSession();
 
   // const [dropdownOpen, setDropdownOpen] = useState(false);

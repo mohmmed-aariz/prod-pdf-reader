@@ -5,7 +5,7 @@ import { getServerSession, Session } from "next-auth";
 import { NEXT_AUTH } from "@/app/api/auth/[...nextauth]/options";
 
 
-export default async function () {
+export default async function ServerNavbar() {
       const session: Session | null = await getServerSession(NEXT_AUTH);
     
   return (

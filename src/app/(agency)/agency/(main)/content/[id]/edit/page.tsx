@@ -3,9 +3,10 @@ import EditDocumentForm from "@/app/ui/agency/content/edit-form";
 import { fetchDocumentById } from "@/lib/data";
 import { notFound } from "next/navigation";
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
     // const id = params.id;
     const { id } = await params;
+    
 
     // const [document] = await Promise.all()
     const documentData = await fetchDocumentById(id);
