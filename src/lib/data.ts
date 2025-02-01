@@ -356,3 +356,38 @@ export async function fetchLatestDocumentId(){
 
   }
 }
+
+
+
+export async function recordView(userId: string, documentId: string) {
+  // Create view history
+  await prisma.viewHistory.create({
+    data: {
+      userId,
+      documentId,
+    },
+  });
+
+  // Increment view count
+  await prisma.documentViewCount.upsert({
+    where: { documentId },
+    update: { viewCount: { increment: 1 } },
+    create: {
+      documentId,
+      viewCount: 1,
+    },
+  });
+}
+
+
+export async function incrementViewCount(documentId: string) {
+  // Increment view count
+  await prisma.documentViewCount.upsert({
+    where: { documentId },
+    update: { viewCount: { increment: 1 } },
+    create: {
+      documentId,
+      viewCount: 1,
+    },
+  });
+}

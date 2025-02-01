@@ -73,7 +73,7 @@ export const NEXT_AUTH: NextAuthOptions = {
     // async jwt({ token, user }: { token: JWT; user: User | AdapterUser; }) {
     async jwt({ token, user }: { token: any; user: any; }) {
 
-      console.log("JWT Callback", { token, user });
+      // console.log("JWT Callback", { token, user });
       // user parameter is only passed to this function, the first time the user logs in!
       // so user token is not always going to be present
       //   console.log("JWT callback: ", { token, user });
@@ -104,7 +104,7 @@ export const NEXT_AUTH: NextAuthOptions = {
       return token;
     },
     async session({ session, token }: any) {
-      console.log("Session Callback", { session, token });
+      // console.log("Session Callback", { session, token });
       const newSession = {
         ...session,
         user: {
@@ -114,7 +114,7 @@ export const NEXT_AUTH: NextAuthOptions = {
         },
       };
 
-      console.log("New Session", newSession)
+      // console.log("New Session", newSession)
 
       return {
         ...session,

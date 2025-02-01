@@ -6,6 +6,7 @@ import {
   ClockIcon,
   CurrencyDollarIcon,
   DocumentDuplicateIcon,
+  ExclamationCircleIcon,
   UserCircleIcon,
 } from '@heroicons/react/24/outline';
 import { Button } from '@/app/ui/button';
@@ -212,20 +213,35 @@ export default function Form() {
               </p>
             ))} */}
           </div>
+          
           </div>
         </fieldset>
+        
       </div>
-      <div className="mt-6 flex justify-end gap-4">
-        <Link
-          href="/agency/content"
-          className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
-        >
-          Cancel
-        </Link>
+      <div className="mt-6 flex justify-between gap-4">
 
-        <Button type='submit' aria-disabled={isPending}>
-          Add Content
-        </Button>
+      <div id="customer-error" aria-live='polite' aria-atomic="true">
+        {isPending && <div className='flex flex-row ml-4 gap-2'>
+            <ExclamationCircleIcon className='h-5 w-5' /> 
+            <p className=' text-sm text-gray-500'>
+              Uploading the file will take a few minutes. Please wait until the upload is complete.
+            </p>
+          </div>}
+      </div>
+
+      <div className='flex flex-row gap-4'>
+              <Link
+                href="/agency/content"
+                className="flex h-10 items-center rounded-lg bg-gray-100 px-4 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-200"
+              >
+                Cancel
+              </Link>
+
+              <Button type='submit' aria-disabled={isPending}>
+                Add Content
+              </Button>
+
+      </div>
 
         {/* <Button type="submit">Add Content</Button> */}
       </div>

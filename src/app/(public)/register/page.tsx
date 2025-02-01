@@ -8,41 +8,41 @@ import { FormEvent, useEffect, useState } from "react";
 export default function () {
   const { data: session, status } = useSession();
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
+  // const toggleDropdown = () => {
+  //   setDropdownOpen(!dropdownOpen);
+  // };
 
-  const closeDropdown = () => {
-    setDropdownOpen(false);
-  };
+  // const closeDropdown = () => {
+  //   setDropdownOpen(false);
+  // };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownOpen &&
-        !document
-          .getElementById("user-menu-button")!
-          .contains(event.target as Node) &&
-        !document
-          .getElementById("user-dropdown")!
-          .contains(event.target as Node)
-      ) {
-        setDropdownOpen(false);
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       dropdownOpen &&
+  //       !document
+  //         .getElementById("user-menu-button")!
+  //         .contains(event.target as Node) &&
+  //       !document
+  //         .getElementById("user-dropdown")!
+  //         .contains(event.target as Node)
+  //     ) {
+  //       setDropdownOpen(false);
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdownOpen]);
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [dropdownOpen]);
 
-  const router = useRouter();
-  if (status === "authenticated") {
-    router.push("/user");
-  }
+  // const router = useRouter();
+  // if (status === "authenticated") {
+  //   router.push("/user");
+  // }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -55,9 +55,9 @@ export default function () {
     if (result?.error) {
       console.log(result.error);
     } else {
-      if (result?.url) {
-        router.push(result?.url); // Redirects to the callbackUrl
-      }
+      // if (result?.url) {
+      //   router.push(result?.url); // Redirects to the callbackUrl
+      // }
     }
   };
 

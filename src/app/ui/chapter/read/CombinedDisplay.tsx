@@ -3,6 +3,7 @@
 import { loadPdfPage } from "@/lib/userActions";
 import { useState, useEffect, useMemo } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import Appbar from "./Appbar";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     '../../../../../node_modules/react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.js',
@@ -148,46 +149,46 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
 
 
 
-import React from 'react';
-import Appbar from "./Appbar";
+// import React from 'react';
+// import Appbar from "./Appbar";
 
-const DownloadButton = ({url}: {url: string}) => {
-  const [isLoading, setIsLoading] = useState(false);
+// const DownloadButton = ({url}: {url: string}) => {
+//   const [isLoading, setIsLoading] = useState(false);
 
-  const downloadFile = async () => {
-    setIsLoading(true);
-    const fileUrl = 'https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlA9AzXXzc5F1D6nzt8WqQPI7yGANTCSVhasbrJ';
-    const fileName = 'example.pdf';
+//   const downloadFile = async () => {
+//     setIsLoading(true);
+//     const fileUrl = 'https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlA9AzXXzc5F1D6nzt8WqQPI7yGANTCSVhasbrJ';
+//     const fileName = 'example.pdf';
 
-    try {
-      const response = await fetch(fileUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+//     try {
+//       const response = await fetch(fileUrl);
+//       const blob = await response.blob();
+//       const url = window.URL.createObjectURL(blob);
 
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', fileName);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to download file', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+//       const link = document.createElement('a');
+//       link.href = url;
+//       link.setAttribute('download', fileName);
+//       document.body.appendChild(link);
+//       link.click();
+//       document.body.removeChild(link);
+//       window.URL.revokeObjectURL(url);
+//     } catch (error) {
+//       console.error('Failed to download file', error);
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
 
-  return (
-    <div>
-      {/* <h1>Download Your File</h1> */}
-      <button onClick={downloadFile} disabled={isLoading}>
-        {isLoading ? 'Downloading...' : 'Download Example PDF'}
-      </button>
-      {isLoading && <p>Fetching your file, please wait...</p>}
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       {/* <h1>Download Your File</h1> */}
+//       <button onClick={downloadFile} disabled={isLoading}>
+//         {isLoading ? 'Downloading...' : 'Download Example PDF'}
+//       </button>
+//       {isLoading && <p>Fetching your file, please wait...</p>}
+//     </div>
+//   );
+// };
 
 
 

@@ -23,20 +23,23 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
       </Link> */}
 
       <div className="flex w-full items-center justify-center border border-white text-gray-300">
-        <div className="flex justify-center items-center">
+        <div className="flex gap-2  justify-center items-center">
+          <MagnifyingGlassMinusIcon
+              className="h-6 pr-4 mx-2 text-gray-300 hover:text-gray-400 border-r-2 border-gray-600"
+              onClick={() => {
+              num < 7 && setNum(num + 1);
+              }}
+          />
+
+          <div className="border border-black px-4 py-2">{100 - 10 * num}</div>
+
           <MagnifyingGlassPlusIcon
             className="h-6 mx-2 text-gray-300 hover:text-gray-400 pl-4 border-l-2 border-gray-600"
             onClick={() => {
               num > 1 && setNum(num - 1);
             }}
           />
-          <div className="border border-black px-4 py-2">{100 - 10 * num}</div>
-          <MagnifyingGlassMinusIcon
-                className="h-6 pr-4 mx-2 text-gray-300 hover:text-gray-400 border-r-2 border-gray-600"
-                onClick={() => {
-                num < 7 && setNum(num + 1);
-                }}
-            />
+          
             {/* <div className="invisible sm:visible" > */}
 
               <PdfDownloadButton url={pdfAppUrl} fileName={title} />

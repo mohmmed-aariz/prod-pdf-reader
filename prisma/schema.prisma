@@ -15,7 +15,6 @@ model User {
   image         String?
   username      String?   @unique
   password      String?
-  // role          Role      
   role          Role      @default(USER)
   // admin Admin? // Optional one-to-one relationship 
   agency        Agency?
@@ -27,6 +26,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  viewHistory    ViewHistory[]
 }
 
 model Agency {
@@ -119,6 +119,9 @@ model PdfDocument {
   pages         PdfPage[]
   authorId String?
   author    Agency?    @relation(fields: [authorId], references: [id])
+  viewCount      DocumentViewCount?
+  viewHistory    ViewHistory[]
+
 
   // authorId      String
   // author        Agency    @relation(fields: [authorId], references: [id])
@@ -159,6 +162,27 @@ enum Role {
   GUEST
   USER
 }
+
+
+
+model ViewHistory {
+  id             String          @id @default(cuid())
+  userId         String
+  user           User            @relation(fields: [userId], references: [id])
+  documentId     String
+  pdfDocument       PdfDocument     @relation(fields: [documentId], references: [id])
+  viewedAt       DateTime        @default(now())
+}
+
+model DocumentViewCount {
+  id             String          @id @default(uuid())
+  documentId     String @unique
+  pdfDocument       PdfDocument     @relation(fields: [documentId], references: [id])
+  viewCount      Int             @default(0)
+}
+
+
+
 
 // model User {
 //   id            String    @id @default(uuid())
