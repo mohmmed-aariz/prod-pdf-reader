@@ -14,7 +14,7 @@ interface AppbarProps {
   
 export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
   return (
-    <div className="flex justify-between items-center border-b px-4 border-slate-300 h-14 backdrop-brightness-50 text-white">
+    <div className="flex justify-between items-center  px-4  h-14 backdrop-brightness-50 text-white">
       {/* <Link
         href={"/user"}
         className="text-lg flex items-center justify-center border border-red-300"
@@ -22,7 +22,7 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
         Logo
       </Link> */}
 
-      <div className="flex w-full items-center justify-center border border-white text-gray-300">
+      <div className="flex w-full items-center justify-center  text-gray-300">
         <div className="flex gap-2  justify-center items-center">
           <MagnifyingGlassMinusIcon
               className="h-6 pr-4 mx-2 text-gray-300 hover:text-gray-400 border-r-2 border-gray-600"
@@ -31,7 +31,7 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
               }}
           />
 
-          <div className="border border-black px-4 py-2">{100 - 10 * num}</div>
+          <div className="border border-gray-700 px-4 py-2 rounded-sm">{100 - 10 * num}</div>
 
           <MagnifyingGlassPlusIcon
             className="h-6 mx-2 text-gray-300 hover:text-gray-400 pl-4 border-l-2 border-gray-600"

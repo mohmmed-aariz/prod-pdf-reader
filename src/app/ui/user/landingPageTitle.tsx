@@ -14,7 +14,7 @@ export default function Title(){
             <h1 className="font-semibold text-2xl uppercase">HIGH PROFILE</h1>
             <div className="flex">
                 <div 
-                    className={`text-gray-600 text-xs  ${isClamped?"line-clamp-2": ""}	hover:text-gray-500 mt-2 mb-3`} 
+                    className={`text-gray-600 text-xs  ${isClamped?"line-clamp-3": ""}	hover:text-gray-500 mt-2 mb-3`} 
                     onClick={()=>{
                         setIsClamped(!isClamped);
                     }}>

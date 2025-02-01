@@ -11,9 +11,9 @@ export default async function () {
   return (
     <div className=" h-16 flex justify-center mx-6 lg:mx-8 bg-gray-900 rounded-b-lg px-2">
 
-      <nav className="w-full flex justify-between py-4 mx-auto  xl:w-4/5 transition-all duration-500 border border-white">
+      <nav className="w-full flex justify-between py-4 mx-auto  xl:w-4/5 transition-all duration-500 ">
         {/* <div className="max-w-screen-xl flex flex-row items-center justify-between mx-auto p-4"> */}
-        <div className="flex flex-row border border-blue-400   ">
+        <div className="flex flex-row   ">
           {/* <div className="flex justify-center"><AppLogo /></div> */}
           {/* <div className="flex flex-col justify-center"> */}
             <Link href={"/user"}>

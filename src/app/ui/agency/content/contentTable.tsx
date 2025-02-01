@@ -13,6 +13,11 @@ export default async function ContentTable({
     currentPage: number
 }) {
     const contentData = await fetchFilteredContent(query, currentPage);
+    // const transformedContent = contentData.map((document) => ({
+    //   ...document,
+    //   totalVisits: document.viewCount ? document.viewCount.viewCount : 0,
+    //   totalLoggedInVisits: document._count ? document._count.viewHistory : 0,
+    // }));
     const defaultImageUrl = '/architect.jpg'
     
     return (
@@ -74,6 +79,12 @@ export default async function ContentTable({
                 <th scope="col" className="px-3 py-5 font-medium">
                   Status
                 </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Total Visits
+                </th>
+                <th scope="col" className="px-3 py-5 font-medium">
+                  Total Logged In Visits
+                </th>
                 <th scope="col" className="relative py-3 pl-6 pr-3">
                   <span className="sr-only">Edit</span>
                 </th>
@@ -110,6 +121,12 @@ export default async function ContentTable({
                   </td>
                   <td className="whitespace-nowrap px-3 py-3">
                     <ContentStatus status={content.hide} />
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {content.viewCount?.viewCount || 0}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3">
+                    {content._count.viewHistory}
                   </td>
                   <td className="whitespace-nowrap py-3 pl-6 pr-3">
                     <div className="flex justify-end gap-3">

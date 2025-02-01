@@ -17,13 +17,16 @@ export default function BookCard({
     coverImageUrl: string,
     createdAt: Date 
 }){
-    console.log(id, createdAt.getFullYear(), coverImageUrl);
+    console.log("image info: ",title, id, createdAt.getFullYear(), coverImageUrl);
     const router = useRouter()
 
 
     return (
-        <div className="relative flex flex-row justify-start rounded-xl bg-gray-50 shadow-sm overflow-hidden my-2
-        hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50 hover:opacity-75 cursor-pointer"
+        <div className="relative flex flex-row justify-start rounded-xl shadow-sm overflow-hidden my-2
+        hover:bg-gradient-to-r hover:from-slate-300 hover:to-stone-50 hover:opacity-90 cursor-pointer
+        border border-gray-300
+        "
+        
         onClick={()=>{
             router.push(`/chapter/${id}/read`);
         }}
@@ -47,11 +50,13 @@ export default function BookCard({
                 />
             ) : (
                 <div className="mr-2 rounded-md w-[100px] h-[auto] min-h-[141.5px] min-w-[100px]">
+                    {/* add year to image */}
                     <BookImageCard />
                 </div>
             )}
             
-            <div className="ml-4 border-b-2 border-gray-300 flex flex-col justify-center w-full">
+            {/* <div className="ml-4 border-b-2 border-gray-300 flex flex-col justify-center w-full"> */}
+            <div className="ml-4  flex flex-col justify-center w-full">
                 <h2 className="text-xl font-semibold">{title}</h2>
                 <p className="mt-2 text-gray-600 text-sm w-5/6 line-clamp-2">
                     {description}

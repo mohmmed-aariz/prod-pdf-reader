@@ -17,7 +17,7 @@ export default async function Layout({ children }: LayoutProps) {
         {/* <NavbarUser /> */}
         <ServerNavbar />
       </div>
-      <div className=" flex-grow bg-slate-600 border-t border-red-400 overflow-auto pt-6">
+      <div className=" flex-grow  overflow-auto pt-6">
         {children}
       </div>
     </div>

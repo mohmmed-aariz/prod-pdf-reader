@@ -341,7 +341,8 @@ export async function uploadFileAndPages(
 
   console.log("Cover image:",coverImg);
 
-  if(coverImg && coverImg instanceof File){
+  if(coverImg && coverImg instanceof File && coverImg.size > 0){
+    console.log("CoverImage is : ", coverImg);
     const coverImgRes = await uploadCoverImage(coverImg);
     // const res = await utapi.uploadFiles([coverImg]);
     // console.log("Uploade Successful: ", res);

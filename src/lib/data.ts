@@ -23,6 +23,16 @@ export async function fetchFilteredContent(
         updatedAt: true,
         hide: true,
         size: true,
+        viewCount:{
+          select: {
+            viewCount: true
+          }
+        },
+        _count: {
+          select: {
+            viewHistory: true
+          }
+        },
         author: {
           select: {
             user: {

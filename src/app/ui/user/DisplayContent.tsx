@@ -5,7 +5,7 @@ import BookCardDefault from "./bookCardDefault";
 export default async function DisplayContent(){
     const contentToDisplay = await fetchUserContent('', 1);
     // console.log(contentToDisplay);
-    return <div className="w-full h-full bg-slate-400">
+    return <div className="w-full h-full ">
                 {/* <div className="flex flex-row justify-center">
                     Hello world
                 </div> */}

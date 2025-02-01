@@ -1,34 +1,45 @@
 
+// import { NEXT_AUTH } from '@/app/api/auth/[...nextauth]/options';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+// import { getServerSession } from 'next-auth';
+import { getSession, signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 
 const PdfDownloadButton = ({ url, fileName }: { url: string, fileName: string }) => {
     console.log(url, fileName)
   const [isLoading, setIsLoading] = useState(false);
+  
 
   const downloadFile = async () => {
-    setIsLoading(true);
-    // const fileUrl = 'https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlA9AzXXzc5F1D6nzt8WqQPI7yGANTCSVhasbrJ';
-    // const fileName = 'example.pdf';
-    const fileUrl = url;
-    const fileTitle = `${fileName}.pdf`;
+    const session = await getSession();
 
-    try {
-      const response = await fetch(fileUrl);
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', fileTitle);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Failed to download file', error);
-    } finally {
-      setIsLoading(false);
+    if(!session){
+      alert("Please sign in first.");
+      signIn("google");
+    } else{
+      setIsLoading(true);
+      // const fileUrl = 'https://smkhor7zi7.ufs.sh/f/hZVG1XIiCNlA9AzXXzc5F1D6nzt8WqQPI7yGANTCSVhasbrJ';
+      // const fileName = 'example.pdf';
+      const fileUrl = url;
+      const fileTitle = `${fileName}.pdf`;
+  
+      try {
+        const response = await fetch(fileUrl);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+  
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', fileTitle);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Failed to download file', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -37,7 +48,7 @@ const PdfDownloadButton = ({ url, fileName }: { url: string, fileName: string })
       {!isLoading ? (
         <button
           type="button"
-          className="flex items-center justify-center hover:text-gray-400 border border-black"
+          className="flex items-center justify-center p-1 hover:text-gray-400 border border-gray-600 rounded-md"
           onClick={()=>{downloadFile()}}
         >
           <ArrowDownTrayIcon className="h-6 mx-2 text-gray-300 hover:text-gray-400" />
@@ -72,3 +83,5 @@ const PdfDownloadButton = ({ url, fileName }: { url: string, fileName: string })
 
 
 export default PdfDownloadButton;
+
+

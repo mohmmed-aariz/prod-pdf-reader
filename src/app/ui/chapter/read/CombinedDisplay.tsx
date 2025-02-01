@@ -92,10 +92,10 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
     const memoizedPages = useMemo(() => (
         pdfStringArray.map((pdfPageString, index) => (
             <div key={index} className="py-2 flex justify-center border-4 border-black">
-                <div className={`w-[${width}] border-4 border-red-500 justify-center`}>
+                <div className={`w-[${width}] justify-center`}>
                     <Document
                         file={pdfPageString}
-                        className="w-full border-4 border-green-400"
+                        className="w-full border-4 border-gray-900"
                     >
                         <Page
                             pageIndex={0}
@@ -131,7 +131,8 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
                     {memoizedPages}
                 </div>
             ) : (
-                <div>Loading...</div>
+                // <div className="flex justify-center">Loading...</div>
+                <div></div>
             )}
             {pdfStringArray.length < totalPages ? (
                 <div className="bg-black text-white flex justify-center">
