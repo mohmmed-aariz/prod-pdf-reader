@@ -13,14 +13,14 @@ export default async function Footer(){
         </svg>
         <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">Company</span>
       </a>
-      <div className="mt-6 lg:max-w-sm">
+      {/* <div className="mt-6 lg:max-w-sm">
         <p className="text-sm text-gray-800">
           Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
         </p>
-        {/* <p className="mt-4 text-sm text-gray-800">
+        <p className="mt-4 text-sm text-gray-800">
           Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-        </p> */}
-      </div>
+        </p> 
+      </div> */}
     </div>
     <div className="space-y-2 text-sm">
       <p className="text-base font-bold tracking-wide text-gray-900">Contacts</p>
@@ -32,12 +32,12 @@ export default async function Footer(){
         <p className="mr-1 text-gray-800">Email:</p>
         <a href="mailto:info@lorem.mail" aria-label="Our email" title="Our email" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">info@</a>
       </div>
-      <div className="flex">
+      {/* <div className="flex">
         <p className="mr-1 text-gray-800">Address:</p>
         <a href="https://www.google.com/maps" target="_blank" rel="noopener noreferrer" aria-label="Our address" title="Our address" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">
           312 Lovely Street, NY
         </a>
-      </div>
+      </div> */}
     </div>
     <div>
       <span className="text-base font-bold tracking-wide text-gray-900">Social</span>
@@ -66,8 +66,9 @@ export default async function Footer(){
         </a>
       </div>
       <p className="mt-4 text-sm text-gray-500">
-        Bacon ipsum dolor amet short ribs pig sausage prosciutto chicken spare ribs salami.
-      </p>
+        {/* Bacon ipsum dolor amet short ribs pig sausage prosciutto chicken spare ribs salami. */}
+        {/* Stay connected with us for expert-driven content tailored specifically for students.  */}
+        Follow us for more insightful and educational updates!      </p>
     </div>
   </div>
   <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
@@ -78,12 +79,12 @@ export default async function Footer(){
     <li>
         <a href="/agency" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Agency</a>
       </li>
-      <li>
+      {/* <li>
         <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">F.A.Q</a>
       </li>
       <li>
         <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Privacy Policy</a>
-      </li>
+      </li> */}
       <li>
         <a href="/" className="text-sm text-gray-600 transition-colors duration-300 hover:text-deep-purple-accent-400">Terms &amp; Conditions</a>
       </li>
