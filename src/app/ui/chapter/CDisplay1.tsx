@@ -7,12 +7,12 @@ import { useEffect, useState } from "react";
 // pdfjs.GlobalWorkerOptions.workerSrc= `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${reactPdf.pdfjs.version}/pdf.worker.min.mjs`
 
 // working solution
-// pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    '../../../../node_modules/react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.js',
-    import.meta.url,
-  ).toString();
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//     '../../../../node_modules/react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.js',
+//     import.meta.url,
+//   ).toString();
 
 export default function CDisplay({ base64string, pgNum }: { base64string: string, pgNum: any }) {
     console.log("Cdisplay getting called ");
