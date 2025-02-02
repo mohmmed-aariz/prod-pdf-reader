@@ -1,4 +1,5 @@
 import { lusitana } from "@/app/ui/fonts";
+import Footer from "@/app/ui/user/footer/footer";
 import NavbarUser from "@/app/ui/user/navbar";
 import ServerNavbar from "@/app/ui/user/navbar/serverNavbar";
 
@@ -17,9 +18,10 @@ export default async function Layout({ children }: LayoutProps) {
         {/* <NavbarUser /> */}
         <ServerNavbar />
       </div>
-      <div className=" flex-grow  overflow-auto pt-6">
+      <div className=" flex-grow min-h-[80vh]  overflow-auto pt-6">
         {children}
       </div>
+      <Footer />
     </div>
   );
 }

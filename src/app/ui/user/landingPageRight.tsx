@@ -31,9 +31,12 @@ export default function LandingPageRight(){
         <div className="mt-2 font-bold text-gray-700">Content</div>
         <div className="my-2 w-full h-full">
             <DisplayContent />
-            
+{/* 
+            <BookCardDefault />
+            <BookCardDefault /> */}
+{/*             
             <DisplayContent />
-            <DisplayContent />
+            <DisplayContent /> */}
 
             {/* Chapters */}
             {/* 
@@ -45,8 +48,7 @@ export default function LandingPageRight(){
             <BookCard />
             <BookCard />
             <BookCard /> */}
-            <BookCardDefault />
-            <BookCardDefault />
+            
             {/* <BookCardDefault /> */}
 
             {/* <ImageCardComp />
