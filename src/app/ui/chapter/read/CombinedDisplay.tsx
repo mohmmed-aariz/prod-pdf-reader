@@ -32,13 +32,21 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
             setNum(1);
         } else if (screenWidth < 768) {
             setNum(2);
-        } else if (screenWidth < 1024) {
+        } 
+        else if (screenWidth < 1024) {
             setNum(3);
-        } else if (screenWidth < 1280) {
+        } if (screenWidth < 1280) {
             setNum(4); 
-        } else {
-            setNum(6);
         }
+        else {
+            setNum(5)
+        }
+        // else if (screenWidth < 1280) {
+        //     setNum(4); 
+        // } else {
+        //     setNum(6);
+        // }
+
         //  else if (screenWidth < 1440) {
         //     setNum(5); 
         // } else if (screenWidth < 1920) {
@@ -93,11 +101,11 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
 
     const memoizedPages = useMemo(() => (
         pdfStringArray.map((pdfPageString, index) => (
-            <div key={index} className="py-2 flex justify-center border-4 border-black">
+            <div key={index} className="py-2 flex justify-center  ">
                 <div className={`w-[${width}] justify-center`}>
                     <Document
                         file={pdfPageString}
-                        className="w-full border-4 border-gray-900"
+                        className="w-full shadow-black shadow-2xl"
                     >
                         <Page
                             pageIndex={0}
