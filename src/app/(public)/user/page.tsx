@@ -1,5 +1,7 @@
+// import { LeftLandingPageSkeleton } from "@/app/ui/skeletons";
 import LandingPageLeft from "@/app/ui/user/landingPageLeft";
 import LandingPageRight from "@/app/ui/user/landingPageRight";
+
 
 export default async function Page() {
     return (
@@ -8,13 +10,13 @@ export default async function Page() {
         <div className="flex flex-col sm:flex-row w-full h-full xl:w-4/5 transition-all duration-500 ">
         {/* <div className="flex flex-col sm:flex-row w-full h-full xl:w-3/5 transition-all duration-500"> */}
 
-          <div className="h-full w-full sm:w-1/3 ">
+          <div className="h-full w-full sm:w-1/3 ">          
             <LandingPageLeft />
           </div>
           
           {/* <div className="h-full w-full sm:w-2/3 bg-slate-200 border border-black rounded-md"> */}
           <div className="h-full w-full sm:w-2/3   rounded-md">
-            <LandingPageRight />
+              <LandingPageRight />
           </div>
         </div>
       </div>

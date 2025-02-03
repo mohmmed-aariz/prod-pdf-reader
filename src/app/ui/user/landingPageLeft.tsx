@@ -5,6 +5,8 @@ import { Button } from "../button"
 import { PlusIcon } from "@heroicons/react/24/outline"
 import { redirect, useRouter } from "next/navigation";
 import { readLatestDocument } from "@/lib/userActions";
+// import { Suspense } from "react";
+// import { LeftLandingPageSkeleton } from "../skeletons";
 
 export default function LandingPageLeft(){
     const router = useRouter();

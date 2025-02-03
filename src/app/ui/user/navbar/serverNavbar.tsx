@@ -9,7 +9,7 @@ export default async function ServerNavbar() {
       const session: Session | null = await getServerSession(NEXT_AUTH);
     
   return (
-    <div className=" h-16 flex justify-center mx-6 lg:mx-8 bg-gray-900 rounded-b-lg px-2">
+    <div className=" h-16 flex justify-center xl:mx-8 bg-gray-900 xl:rounded-b-lg px-2 transition-all duration-500">
 
       <nav className="w-full flex justify-between py-4 mx-auto  xl:w-4/5 transition-all duration-500 ">
         {/* <div className="max-w-screen-xl flex flex-row items-center justify-between mx-auto p-4"> */}

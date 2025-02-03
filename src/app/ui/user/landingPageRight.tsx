@@ -1,11 +1,9 @@
-// import ContentDisplay from "./contentDisplay";
-// import ImageCardComp from "./imageCardComp";
-import BookCard from "./bookCard";
-import BookCardDefault from "./bookCardDefault";
+import { Suspense } from "react";
 import DisplayContent from "./DisplayContent";
 import Title from "./landingPageTitle";
+import { DisplayContentSkeleton } from "../skeletons";
 
-export default function LandingPageRight(){
+export default async function LandingPageRight(){
 
 
     return <div className="flex flex-col h-full w-full px-4 ">
@@ -30,7 +28,10 @@ export default function LandingPageRight(){
         {/* <MarginBottom /> */}
         <div className="mt-2 font-bold text-gray-700">Content</div>
         <div className="my-2 w-full h-full">
-            <DisplayContent />
+
+            <Suspense fallback={<DisplayContentSkeleton />}>
+                <DisplayContent />
+            </Suspense>
 {/* 
             <BookCardDefault />
             <BookCardDefault /> */}

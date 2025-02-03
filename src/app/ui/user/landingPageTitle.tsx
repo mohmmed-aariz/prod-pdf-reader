@@ -10,7 +10,7 @@ export default function Title(){
     const [isClamped, setIsClamped] = useState(true);
     
     return (
-        <div className={`flex flex-col border-b border-gray-300 w-11/12 ${lusitana.className} antialiased text-gray-900`}>
+        <div className={`flex flex-col border-b border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-300 w-11/12 ${lusitana.className} antialiased text-gray-900`}>
             <h1 className="font-semibold text-2xl uppercase">HIGH PROFILE</h1>
             <div className="flex">
                 <div 
