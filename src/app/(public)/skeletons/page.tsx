@@ -1,3 +1,4 @@
+import { LatestContentSkeleton } from "@/app/ui/agency/dashboard/skeletons";
 import { CardSkeleton, DisplayContentSkeleton, LeftLandingPageSkeleton, TitleSkeleton } from "@/app/ui/skeletons";
 
 export default function Page(){
@@ -9,8 +10,10 @@ export default function Page(){
             <DisplayContentSkeleton />
             <DisplayContentSkeleton /> */}
             {/* <LeftLandingPageSkeleton /> */}
-            <DisplayContentSkeleton />
 
+            {/* <DisplayContentSkeleton /> */}
+
+            <LatestContentSkeleton />
             
         </div>
     )

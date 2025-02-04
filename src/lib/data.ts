@@ -401,3 +401,103 @@ export async function incrementViewCount(documentId: string) {
     },
   });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export async function fetchDashboardCardData(){
+  try {
+    const documentCountPromise = await prisma.pdfDocument.count({
+      where: {
+        hide: false
+      }
+    });
+    const editorsCountPromise = await prisma.agency.count();
+    const userCountPromise = await prisma.user.count({
+      where: {
+        role: 'USER'
+      }
+    })
+
+    const data = await Promise.all([
+      documentCountPromise,
+      editorsCountPromise,
+      userCountPromise,
+    ])
+
+    // console.log("fetchDashboardCardData: ",data);
+    return data
+    
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch card data.');
+  }
+}
+
+
+
+export async function fetchLatestDashboardContent(){
+
+  try {
+    const content = await prisma.pdfDocument.findMany({
+      select: {
+        id: true,
+        title: true,
+        // description: true,
+        coverImageUrl: true,
+        //  pdfAppUrl: true,
+        totalPages: true,
+        createdAt: true,
+        // updatedAt: true,
+        // size: true,
+        viewCount:{
+          select: {
+            viewCount: true
+          }
+        },
+        _count: {
+          select: {
+            viewHistory: true
+          }
+        },
+        author: {
+          select: {
+            user: {
+              select: {
+                name: true
+              }
+            }
+            
+          },
+        },
+      },
+      where: {
+        hide: false        
+      },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      take: 5,
+    });
+
+    // console.log(content);
+
+    return content;
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+
+  }
+}
