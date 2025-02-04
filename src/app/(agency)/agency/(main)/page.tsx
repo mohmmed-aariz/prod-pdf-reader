@@ -12,7 +12,7 @@ import { Suspense } from "react"
 export default async function Page(){
     const session = await getServerSession(NEXT_AUTH);
     return (
-        <div>
+        <div className="">
             <h1 className={`${lusitana.className} px-1 pt-2 mb-4 text-xl md:text-2xl pb-2 border-b-2 bg-gray-50 border-gray-200 text-gray-800 rounded-md`}>
                 Hello, {session?.user.name}
             </h1>

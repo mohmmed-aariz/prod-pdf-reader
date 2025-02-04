@@ -18,7 +18,7 @@ const iconMap = {
   
         <Card title="Signed Up Users Count" value={userCount} type="users" />
         <Card title="Editorial Count" value={documentCount} type="documents" />
-        <Card title="Editorial Prsonnel" value={editorCount} type="editors" />
+        <Card title="Editorial Personnel" value={editorCount} type="editors" />
         
       </>
     );
