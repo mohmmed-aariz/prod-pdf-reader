@@ -16,7 +16,7 @@ export default function BookCardDefault(){
             // style={{width: '150px', height: 'auto'}}
             priority={true} />  */}
         
-        <BookImageCard />
+        <BookImageCard createdAt={new Date()}/>
         <div className="ml-4 border-b border-gray-300 flex  flex-col justify-center  ">
             <h2 className="text-xl font-semibold">Product Name .</h2>
             {/* <p className="mt-2 text-gray-600 text-sm w-11/12 ">This is the description of the product. It provides an overview of the key features and benefits of the product.This is the description of the product. It provides an overview of the key features and benefits of the product.This is the description of the product. It provides an overview of the key features and benefits of the product.This is the description of the product. It provides an overview of the key features and benefits of the product.This is the description of the product. It provides an overview of the key features and benefits of the product.</p> */}

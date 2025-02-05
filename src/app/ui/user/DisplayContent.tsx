@@ -1,6 +1,5 @@
 import { fetchUserContent } from "@/lib/data"
 import BookCard from "./bookCard";
-import BookCardDefault from "./bookCardDefault";
 
 export default async function DisplayContent(){
     const contentToDisplay = await fetchUserContent('', 1);
@@ -14,7 +13,6 @@ export default async function DisplayContent(){
                         {contentToDisplay.map((document, index) => (
                             <div key={index} className=""> {/* Add margin-y to separate the documents */}
                                 <BookCard id={document.id} title={document.title} description={document.description || ""} coverImageUrl={document.coverImageUrl || ""} createdAt={document.createdAt} />
-                                {/* <BookCardDefault /> */}
                             </div>
                         ))}
                     </div>

@@ -32,9 +32,7 @@ export default async function LandingPageRight(){
             <Suspense fallback={<DisplayContentSkeleton />}>
                 <DisplayContent />
             </Suspense>
-{/* 
-            <BookCardDefault />
-            <BookCardDefault /> */}
+
 {/*             
             <DisplayContent />
             <DisplayContent /> */}
@@ -50,7 +48,6 @@ export default async function LandingPageRight(){
             <BookCard />
             <BookCard /> */}
             
-            {/* <BookCardDefault /> */}
 
             {/* <ImageCardComp />
             <ImageCardComp />
