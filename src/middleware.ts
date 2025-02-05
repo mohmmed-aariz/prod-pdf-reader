@@ -1,14 +1,20 @@
+import { getServerSession } from 'next-auth';
 import { getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { NEXT_AUTH } from './app/api/auth/[...nextauth]/options';
 
 // This function can be marked `async` if using `await` inside
 export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request });
+    // const session = await getServerSession({req: request},NEXT_AUTH);
+    // const session = await getServerSession({req: request})
     const url = request.nextUrl;
     const { pathname } = url;
 
     console.log("Token from middleware is:", token);
+    // console.log("Session from middleware is:", session);
+
 
     // Redirect users from root path '/' to '/user'
     if (pathname === '/') {

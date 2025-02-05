@@ -160,7 +160,7 @@ export default function EditDocumentForm({
             >
               Cancel
             </Link>
-            <Button type="submit">Edit Invoice</Button>
+            <Button type="submit" aria-disabled={isPending}>Edit Invoice</Button>
           </div>
         </form>
       );

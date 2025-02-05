@@ -11,7 +11,7 @@ export default async function Footer(){
           <rect x="14" y="1" width="7" height="6"></rect>
           <rect x="14" y="11" width="7" height="12"></rect>
         </svg>
-        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">Company</span>
+        <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">Sid Jan Media Pvt. Ltd.</span>
       </a>
       {/* <div className="mt-6 lg:max-w-sm">
         <p className="text-sm text-gray-800">
@@ -73,7 +73,7 @@ export default async function Footer(){
   </div>
   <div className="flex flex-col-reverse justify-between pt-5 pb-10 border-t lg:flex-row">
     <p className="text-sm text-gray-600">
-      © Copyright 2020 Lorem Inc. All rights reserved.
+      © Copyright 2025 Sid Jan Media Pvt. Ltd. All rights reserved.
     </p>
     <ul className="flex flex-col mb-3 space-y-2 lg:mb-0 sm:space-y-0 sm:space-x-5 sm:flex-row">
     <li>

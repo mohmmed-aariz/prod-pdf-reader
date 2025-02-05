@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { PowerIcon } from '@heroicons/react/24/outline';
 import { signOut } from 'next-auth/react';
 import NavLinks from './navLinks';
+import { lusitana } from '../fonts';
 
 export default function SideNav() {
     
@@ -16,7 +17,8 @@ export default function SideNav() {
       >
         <div className="w-32 text-white md:w-40">
           {/* <AcmeLogo /> */}
-          Logo
+          {/* Logo */}
+          <h1 className={`font-bold text-2xl ${lusitana.className}`}>HIGH PROFILE</h1>
         </div>
       </Link>
       <div className="flex grow flex-row justify-between space-x-2 md:flex-col md:space-x-0 md:space-y-2">

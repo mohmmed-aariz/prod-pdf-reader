@@ -17,7 +17,8 @@ export default function BookCard({
     coverImageUrl: string,
     createdAt: Date 
 }){
-    console.log("image info: ",title, id, createdAt.getFullYear(), coverImageUrl);
+    console.log("image info: ",title, id, createdAt, coverImageUrl);
+    // console.log("CreatedAt: ", createdAt.toLocaleString("en-us", {month: 'long'}));
     const router = useRouter()
 
 
@@ -51,7 +52,7 @@ export default function BookCard({
             ) : (
                 <div className="mr-2 rounded-md w-[100px] h-[auto] min-h-[141.5px] min-w-[100px]">
                     {/* add year to image */}
-                    <BookImageCard />
+                    <BookImageCard createdAt={createdAt}/>
                 </div>
             )}
             

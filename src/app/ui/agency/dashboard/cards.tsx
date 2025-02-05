@@ -3,9 +3,9 @@ import { lusitana } from "../../fonts";
 import { fetchDashboardCardData } from "@/lib/data";
 
 const iconMap = {
-    users: AcademicCapIcon,
+    users: UserGroupIcon,
     editors: PencilIcon,
-    documents: UserGroupIcon,
+    documents: DocumentTextIcon,
     // invoices: InboxIcon,
   };
 
@@ -18,7 +18,7 @@ const iconMap = {
   
         <Card title="Signed Up Users Count" value={userCount} type="users" />
         <Card title="Editorial Count" value={documentCount} type="documents" />
-        <Card title="Editorial Personnel" value={editorCount} type="editors" />
+        <Card title="Editorial Team" value={editorCount} type="editors" />
         
       </>
     );
