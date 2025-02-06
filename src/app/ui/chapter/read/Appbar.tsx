@@ -3,6 +3,7 @@ import Link from "next/link";
 import React from 'react';
 import DownloadButton from './PdfDownloadButton'; // Make sure to import DownloadButton
 import PdfDownloadButton from "./PdfDownloadButton";
+import PdfDownloadButtonWithPercentage from "./pdfDownloadButtonWithPercent";
 
   
 interface AppbarProps {
@@ -40,10 +41,11 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
             }}
           />
           
-            {/* <div className="invisible sm:visible" > */}
+            <div className="border-4 border-black w-24" >
 
-              <PdfDownloadButton url={pdfAppUrl} fileName={title} />
-            {/* </div> */}
+              {/* <PdfDownloadButton url={pdfAppUrl} fileName={title} /> */}
+              <PdfDownloadButtonWithPercentage url={pdfAppUrl} fileName={title} />
+            </div>
             </div>
       </div>
 

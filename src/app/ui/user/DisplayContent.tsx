@@ -12,7 +12,7 @@ export default async function DisplayContent(){
                     <div>
                         {contentToDisplay.map((document, index) => (
                             <div key={index} className=""> {/* Add margin-y to separate the documents */}
-                                <BookCard id={document.id} title={document.title} description={document.description || ""} coverImageUrl={document.coverImageUrl || ""} createdAt={document.createdAt} />
+                                <BookCard id={document.id} title={document.title} description={document.description || ""} coverImageUrl={document.coverImageUrl || ""} createdAt={document.createdAt} pdfAppUrl={document.pdfAppUrl} />
                             </div>
                         ))}
                     </div>

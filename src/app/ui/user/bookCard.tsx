@@ -3,19 +3,23 @@
 import Image from "next/image";
 import BookImageCard from "./bookImageCard";
 import { useRouter } from "next/navigation";
+import PdfDownloadButtonWithPercentage from "../chapter/read/pdfDownloadButtonWithPercent";
+import LandingPagePdfDownloadButton from "./downloadButton/button";
 
 export default function BookCard({
     id,
     title,
     description,
     coverImageUrl,
-    createdAt
+    createdAt,
+    pdfAppUrl
 }: {
     id: string,
     title: string,
     description: string,
     coverImageUrl: string,
-    createdAt: Date 
+    createdAt: Date ,
+    pdfAppUrl: string
 }){
     console.log("image info: ",title, id, createdAt, coverImageUrl);
     // console.log("CreatedAt: ", createdAt.toLocaleString("en-us", {month: 'long'}));
@@ -63,9 +67,15 @@ export default function BookCard({
                     {description}
                 </p>
             </div>
+            {/* <button className="border border-black" onClick={(e)=>{      e.stopPropagation();
+console.log("hello")}}>hello</button> */}
+<div className="flex flex-row min-h-full  justify-between items-center  pr-2 lg:pr-4">
+<LandingPagePdfDownloadButton url={pdfAppUrl} fileName={title} fileId={id}  />
+</div>
         </div>
     )
 }
+
 
 
 

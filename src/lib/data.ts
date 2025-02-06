@@ -252,7 +252,7 @@ export async function fetchUserContent(
         title: true,
         description: true,
         coverImageUrl: true,
-        //  pdfAppUrl: true,
+        pdfAppUrl: true,
         // totalPages: true,
         createdAt: true,
         // updatedAt: true,
