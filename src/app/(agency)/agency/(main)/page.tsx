@@ -14,7 +14,7 @@ export default async function Page(){
     return (
         <div className="">
             <h1 className={`${lusitana.className} px-1 pt-2 mb-4 text-xl md:text-2xl pb-2 border-b-2 bg-gray-50 border-gray-200 text-gray-800 rounded-md`}>
-                Hello, {session?.user.name}
+                Hello, {session?.user.name}!
             </h1>
             {/* <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-4  "> */}
                 {/* <Appbar /> */}

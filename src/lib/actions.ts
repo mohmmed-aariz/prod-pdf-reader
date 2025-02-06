@@ -75,7 +75,7 @@ export async function getAgencyUser(){
 import { PDFDocument, PDFPage } from 'pdf-lib';
 import { utapi } from "@/server/uploadthing";
 import sharp from "sharp";
-import { PdfPage } from "@prisma/client";
+import { PdfPage, Role } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -618,6 +618,31 @@ export async function deleteDocument(id: string){
 
 
 
+
+export async function deleteSubscriber(id: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {id: id},
+      select: {role: true}
+    });
+
+    if (user?.role !== Role.ADMIN){
+
+      await prisma.user.delete({
+        where: {
+          id: id
+        }
+      })
+    }
+
+    console.log({ message: "Operation not allowed: Cannot delete an ADMIN subscriber."});
+
+  } catch (error) {
+    console.error('Database Error:', error);
+  }
+
+  revalidatePath('/agency/subscribers');
+}
 
 
 

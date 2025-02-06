@@ -1,6 +1,8 @@
 "use server"
 
+import { equal } from "assert";
 import prisma from "./db";
+import { Role } from "@prisma/client";
 
 
 const ITEMS_PER_PAGE = 6;
@@ -447,7 +449,8 @@ export async function fetchDashboardCardData(){
 
 
 
-export async function fetchLatestDashboardContent(){
+
+export async function fetchLatestDashboardContent(query: string, currentPage: number){
 
   try {
     const content = await prisma.pdfDocument.findMany({
@@ -501,3 +504,191 @@ export async function fetchLatestDashboardContent(){
 
   }
 }
+
+
+const SUBSCRIBERS_PER_PAGE = 10;
+
+export async function fetchSubscriberPages(query: string) {
+  try {
+    const count = await prisma.user.count({
+      where: {
+        OR: [
+          // {
+          //   role: {
+          //     equals: query as any,
+          //     mode: 'insensitive',
+          //   },
+          // },
+          {
+            viewHistory: {
+              some: {
+                pdfDocument: {
+                  title: {
+                    contains: query,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: {
+              contains: query,
+              mode: 'insensitive',
+            }
+          }
+        ],
+      },
+    });
+
+    const totalPages = Math.ceil(count / SUBSCRIBERS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of subscribers.');
+  }
+}
+
+
+
+export async function fetchFilteredSubscribers(
+  query: string, 
+  currentPage: number
+) {
+  const offset = (currentPage - 1) * SUBSCRIBERS_PER_PAGE;
+
+  try {
+    const subscribers = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        image: true,
+        role: true,
+        createdAt: true,
+        // viewHistory: {
+        //   select: {
+        //     documentId: true,
+        //     viewedAt: true,
+        //     pdfDocument: {
+        //       select: {
+        //         title: true,
+        //       },
+        //     },
+        //   },
+        // },
+        _count: {
+          select: {
+            viewHistory: true
+          }
+        }
+      },
+      where: {
+        OR: [
+          // {
+          //   role: {
+          //     equals: query as Role, // Adjusting the role to match the enum type
+          //   },
+          // },
+          {
+            viewHistory: {
+              some: {
+                pdfDocument: {
+                  title: {
+                    contains: query,
+                    mode: 'insensitive',
+                  },
+                },
+              },
+            },
+          },
+          {
+            name: {
+              contains: query,
+              mode: 'insensitive',
+            }
+          }
+        ],
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: ITEMS_PER_PAGE,
+      skip: offset,
+    });
+
+    console.log("server: ", subscribers);
+    return subscribers;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch filtered subscribers.');
+  }
+}
+
+
+// export async function fetchFilteredSubscribersDistinct(
+//   query: string, 
+//   currentPage: number
+// ) {
+//   const offset = (currentPage - 1) * SUBSCRIBERS_PER_PAGE;
+
+//   try {
+//     const subscribers = await prisma.user.findMany({
+//       select: {
+//         id: true,
+//         name: true,
+//         email: true,
+//         image: true,
+//         role: true,
+//         createdAt: true,
+//         viewHistory: {
+//           select: {
+//             documentId: true,
+//             viewedAt: true,
+//             pdfDocument: {
+//               select: {
+//                 title: true,
+//               },
+//             },
+//           },
+//         },
+//         _count: {
+//           select: {
+//             viewHistory: true
+//           }
+//         }
+//       },
+//       where: {
+//         OR: [
+//           // {
+//           //   role: {
+//           //     equals: query as any, // Adjusting the role to match the enum type
+//           //   },
+//           // },
+//           {
+//             viewHistory: {
+//               some: {
+//                 pdfDocument: {
+//                   title: {
+//                     contains: query,
+//                     mode: 'insensitive',
+//                   },
+//                 },
+//               },
+//             },
+//           },
+//         ],
+//       },
+//       orderBy: {
+//         createdAt: 'desc',
+//       },
+//       take: ITEMS_PER_PAGE,
+//       skip: offset,
+//     });
+
+//     return subscribers;
+//   } catch (error) {
+//     console.error('Database Error:', error);
+//     throw new Error('Failed to fetch filtered subscribers.');
+//   }
+// }
