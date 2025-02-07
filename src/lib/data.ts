@@ -450,7 +450,8 @@ export async function fetchDashboardCardData(){
 
 
 
-export async function fetchLatestDashboardContent(query: string, currentPage: number){
+// export async function fetchLatestDashboardContent(query: string, currentPage: number){
+export async function fetchLatestDashboardContent(){
 
   try {
     const content = await prisma.pdfDocument.findMany({
