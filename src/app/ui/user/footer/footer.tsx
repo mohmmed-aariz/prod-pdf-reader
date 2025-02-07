@@ -30,7 +30,7 @@ export default async function Footer(){
       </div>
       <div className="flex">
         <p className="mr-1 text-gray-800">Email:</p>
-        <a href="mailto:info@lorem.mail" aria-label="Our email" title="Our email" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">info@</a>
+        <a href="mailto:mohmmed.ariz786@gmail.com" aria-label="Our email" title="Our email" className="transition-colors duration-300 text-deep-purple-accent-400 hover:text-deep-purple-800">abc@gmail.com</a>
       </div>
       {/* <div className="flex">
         <p className="mr-1 text-gray-800">Address:</p>
