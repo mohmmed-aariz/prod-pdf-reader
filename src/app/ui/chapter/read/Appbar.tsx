@@ -41,7 +41,7 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
             }}
           />
           
-            <div className="border-4 border-black w-24" >
+            <div className=" w-24" >
 
               {/* <PdfDownloadButton url={pdfAppUrl} fileName={title} /> */}
               <PdfDownloadButtonWithPercentage url={pdfAppUrl} fileName={title} />

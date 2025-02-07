@@ -28,6 +28,7 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
     const updateNumBasedOnScreenSize = () => {
         console.log("inside updateNumBasedOnScreenSize");
         const screenWidth = window.innerWidth;
+        // console.log(screenWidth);
         if (screenWidth < 640) {
             setNum(1);
         } else if (screenWidth < 768) {
@@ -35,12 +36,12 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
         } 
         else if (screenWidth < 1024) {
             setNum(3);
-        } if (screenWidth < 1280) {
+        } else  {
             setNum(4); 
         }
-        else {
-            setNum(5)
-        }
+        // else {
+        //     setNum(5)
+        // }
         // else if (screenWidth < 1280) {
         //     setNum(4); 
         // } else {
@@ -65,6 +66,7 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
         const fetchPdfPage = async (index: number) => {
             if (index < arrUrl.length) {
                 const res = await loadPdfPage(arrUrl[index]);
+                // console.log(res);
                 if (res) {
                     setPdfStringArray((prevArray) => [...prevArray, res]);
                     setCurrentIndex(index + 1);
@@ -120,7 +122,6 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
 
     return (
         <div className="w-full h-full ">
-            
         {/* <div className="w-full h-full bg-gradient-to-r from-gray-900 via-rose-800 to-gray-900"> */}
             {/* <div className="flex flex-row justify-center border border-black">
                 <button className="border border-gray-950 p-3 bg-slate-500" onClick={() =>{ num < 7 && setNum(num + 1);
