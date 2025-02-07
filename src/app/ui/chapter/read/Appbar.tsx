@@ -10,10 +10,11 @@ interface AppbarProps {
     num: number;
     setNum: React.Dispatch<React.SetStateAction<number>>;
     pdfAppUrl: string;
-    title: string
+    title: string;
+    fileId: string;
   }
   
-export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
+export default function Appbar({ num, setNum, pdfAppUrl , title, fileId}: AppbarProps) {
   return (
     <div className="flex justify-between items-center  px-4  h-14 backdrop-brightness-50 text-white">
       {/* <Link
@@ -44,7 +45,7 @@ export default function Appbar({ num, setNum, pdfAppUrl , title}: AppbarProps) {
             <div className=" w-24" >
 
               {/* <PdfDownloadButton url={pdfAppUrl} fileName={title} /> */}
-              <PdfDownloadButtonWithPercentage url={pdfAppUrl} fileName={title} />
+              <PdfDownloadButtonWithPercentage url={pdfAppUrl} fileName={title} fileId={fileId} />
             </div>
             </div>
       </div>

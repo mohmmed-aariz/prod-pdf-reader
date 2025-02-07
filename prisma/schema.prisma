@@ -1,6 +1,6 @@
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
@@ -25,9 +25,9 @@ model User {
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  viewHistory    ViewHistory[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  viewHistory ViewHistory[]
 }
 
 model Agency {
@@ -102,27 +102,27 @@ model Authenticator {
 }
 
 model PdfDocument {
-  id            String    @id @default(uuid())
-  title         String  //
-  description   String?  //
-  coverImageUrl String?  
-  coverImageKey String? @unique
-  pdfUrl        String  
+  id            String                 @id @default(uuid())
+  title         String //
+  description   String? //
+  coverImageUrl String?
+  coverImageKey String?                @unique
+  pdfUrl        String
   pdfAppUrl     String
-  pdfKey        String  @unique
+  pdfKey        String                 @unique
   totalPages    Int
-  pdfPagesUrl   String[] 
-  pdfPagesKey String[]
-  hide          Boolean   @default(false) //
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  size          Int 
+  pdfPagesUrl   String[]
+  pdfPagesKey   String[]
+  hide          Boolean                @default(false) //
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime               @updatedAt
+  size          Int
   pages         PdfPage[]
-  authorId String?
-  author    Agency?    @relation(fields: [authorId], references: [id])
-  viewCount      DocumentViewCount?
-  viewHistory    ViewHistory[]
-
+  authorId      String?
+  author        Agency?                @relation(fields: [authorId], references: [id])
+  viewCount     DocumentViewCount?
+  downloadCount DocumentDownloadCount?
+  viewHistory   ViewHistory[]
 
   // authorId      String
   // author        Agency    @relation(fields: [authorId], references: [id])
@@ -154,7 +154,6 @@ model PdfPage {
 //   createdAt DateTime @default(now())
 //   updatedAt     DateTime    @updatedAt
 
-
 // }
 
 enum Role {
@@ -164,23 +163,64 @@ enum Role {
   USER
 }
 
-
+// model ViewHistory {
+//   id          String      @id @default(cuid())
+//   userId      String
+//   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   documentId  String
+//   pdfDocument PdfDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+//   viewedAt    DateTime    @default(now())
+// }
 
 model ViewHistory {
   id             String          @id @default(cuid())
   userId         String
-  user           User            @relation(fields: [userId], references: [id])
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   documentId     String
-  pdfDocument       PdfDocument     @relation(fields: [documentId], references: [id])
+  pdfDocument    PdfDocument     @relation(fields: [documentId], references: [id], onDelete: Cascade)
   viewedAt       DateTime        @default(now())
+
+  @@unique([userId, documentId])
 }
 
+
 model DocumentViewCount {
-  id             String          @id @default(uuid())
-  documentId     String @unique
-  pdfDocument       PdfDocument     @relation(fields: [documentId], references: [id])
-  viewCount      Int             @default(0)
+  id          String      @id @default(uuid())
+  documentId  String      @unique
+  pdfDocument PdfDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  viewCount   Int         @default(0)
 }
+
+model DocumentDownloadCount {
+  id            String      @id @default(uuid())
+  documentId    String      @unique
+  pdfDocument   PdfDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  downloadCount Int         @default(0)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

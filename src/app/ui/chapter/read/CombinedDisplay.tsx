@@ -12,11 +12,12 @@ import Appbar from "./Appbar";
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
 
-export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, title}: {
+export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, title, fileId}: {
     title: string;
     pdfAppUrl: string;
     totalPages: number;
     pdfPagesUrl: string[];
+    fileId: string;
 } ) {
     const arrUrl = pdfPagesUrl;
 
@@ -135,7 +136,7 @@ export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, ti
             </div> */}
 
             {/* <Appbar num={num} setNum={setNum}/> */}
-            <Appbar num={num} setNum={setNum} pdfAppUrl={pdfAppUrl} title={title} />
+            <Appbar num={num} setNum={setNum} pdfAppUrl={pdfAppUrl} title={title} fileId={fileId} />
 
             {pdfStringArray.length > 0 ? (
                 <div>

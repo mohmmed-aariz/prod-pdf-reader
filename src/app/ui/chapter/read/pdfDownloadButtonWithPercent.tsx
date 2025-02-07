@@ -1,8 +1,9 @@
+import { incrementDownloadCount } from '@/lib/data';
 import { ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { getSession, signIn } from 'next-auth/react';
 import React, { useState } from 'react';
 
-const PdfDownloadButtonWithPercentage = ({ url, fileName }: { url: string, fileName: string }) => {
+const PdfDownloadButtonWithPercentage = ({ url, fileName, fileId }: { url: string, fileName: string, fileId: string }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -14,6 +15,7 @@ const PdfDownloadButtonWithPercentage = ({ url, fileName }: { url: string, fileN
       signIn("google");
     } else {
       setIsLoading(true);
+      // incrementDownloadCount()
       const fileUrl = url;
       const fileTitle = `${fileName}.pdf`;
 

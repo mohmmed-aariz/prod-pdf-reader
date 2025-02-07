@@ -1,4 +1,4 @@
-import { recordView } from "@/lib/data";
+import { incrementDownloadCount, recordView } from "@/lib/data";
 import { ArrowDownCircleIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 import { getSession, signIn } from "next-auth/react";
 import { useState } from "react";
@@ -17,7 +17,8 @@ export default function LandingPagePdfDownloadButton({ url, fileName, fileId }: 
       } else {
 
         setIsLoading(true);
-        await recordView(session.user.id, fileId);
+        // await recordView(session.user.id, fileId);
+        await incrementDownloadCount(fileId);
         const fileUrl = url;
         const fileTitle = `${fileName}.pdf`;
   

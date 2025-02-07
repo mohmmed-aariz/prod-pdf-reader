@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     return (
         <div >
             {/* Hello from /chapter/[id]/page */}
-            <CombinedDisplay pdfAppUrl={documentData.pdfAppUrl} pdfPagesUrl={documentData.pdfPagesUrl} totalPages={documentData.totalPages} title={documentData.title}/>
+            <CombinedDisplay pdfAppUrl={documentData.pdfAppUrl} pdfPagesUrl={documentData.pdfPagesUrl} totalPages={documentData.totalPages} title={documentData.title} fileId={id}/>
         </div>
     )
 }

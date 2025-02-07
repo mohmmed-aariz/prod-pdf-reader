@@ -71,9 +71,9 @@ export default async function SubscribersTable({
                     <th scope="col" className="px-3 py-5 font-medium">
                       Role
                     </th>
-                    <th scope="col" className="relative py-3 pl-6 pr-3">
+                    {/* <th scope="col" className="relative py-3 pl-6 pr-3">
                       <span className="sr-only">Edit</span>
-                    </th>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="bg-white">
@@ -109,7 +109,8 @@ export default async function SubscribersTable({
                       <td className="whitespace-nowrap py-3 pl-6 pr-3">
                         <div className="flex justify-end gap-3">
                           {/* <Updatesubscriber id={subscriber.id} /> */}
-                          <DeleteSubscriberButton id={subscriber.id} role={subscriber.role} />
+                          {/* uncomment DeleteSubscriberButton */}
+                          {/* <DeleteSubscriberButton id={subscriber.id} role={subscriber.role} /> */}
                         </div>
                       </td>
                     </tr>

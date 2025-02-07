@@ -371,16 +371,46 @@ export async function fetchLatestDocumentId(){
 
 
 
-export async function recordView(userId: string, documentId: string) {
-  // Create view history
-  await prisma.viewHistory.create({
-    data: {
-      userId,
-      documentId,
-    },
-  });
+// export async function recordView(userId: string, documentId: string) {
+//   // Create view history
+//   await prisma.viewHistory.create({
+//     data: {
+//       userId,
+//       documentId,
+//     },
+//   });
 
-  // Increment view count
+//   // Increment view count
+//   await prisma.documentViewCount.upsert({
+//     where: { documentId },
+//     update: { viewCount: { increment: 1 } },
+//     create: {
+//       documentId,
+//       viewCount: 1,
+//     },
+//   });
+// }
+
+export async function recordView(userId: string, documentId: string) {
+  try {
+    // Attempt to create the view history entry
+    await prisma.viewHistory.create({
+      data: {
+        userId,
+        documentId,
+      },
+    });
+  } catch (error) {
+    console.log("error");
+    // if (error.code === 'P2002') {
+    //   // The entry already exists
+    //   console.log('The view history entry already exists.');
+    // } else {
+    //   throw error;
+    // }
+  }
+
+  // Increment view count regardless of whether the view history entry already exists
   await prisma.documentViewCount.upsert({
     where: { documentId },
     update: { viewCount: { increment: 1 } },
@@ -405,7 +435,16 @@ export async function incrementViewCount(documentId: string) {
 }
 
 
-
+export async function incrementDownloadCount(documentId: string){
+  await prisma.documentDownloadCount.upsert({
+    where: { documentId},
+    update: { downloadCount: { increment: 1}},
+    create: {
+      documentId,
+      downloadCount: 1
+    }
+  })
+}
 
 
 
