@@ -18,6 +18,7 @@ export default async function DisplayContent(){
                     </div>
                 ) : (
                     <div>Loading...</div>
+                    // no record found!
                 )}
             </div>
 }
