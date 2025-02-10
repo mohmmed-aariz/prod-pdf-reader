@@ -394,14 +394,16 @@ export async function fetchLatestDocumentId(){
 export async function recordView(userId: string, documentId: string) {
   try {
     // Attempt to create the view history entry
-    await prisma.viewHistory.create({
+    console.log(userId, documentId )
+    const res = await prisma.viewHistory.create({
       data: {
         userId,
         documentId,
       },
     });
+    // console.log(res);
   } catch (error) {
-    console.log("error");
+    console.log("Error while recording view: it has already been recorded");
     // if (error.code === 'P2002') {
     //   // The entry already exists
     //   console.log('The view history entry already exists.');
