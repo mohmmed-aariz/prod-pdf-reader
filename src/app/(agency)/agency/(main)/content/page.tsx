@@ -2,6 +2,7 @@ import { CreateContent } from "@/app/ui/agency/content/buttons";
 import ContentTable from "@/app/ui/agency/content/contentTable";
 import Pagination from "@/app/ui/agency/pagination";
 import Search from "@/app/ui/agency/search";
+import { lusitana } from "@/app/ui/fonts";
 import { deleteDocument } from "@/lib/actions";
 import { fetchDocumentPages } from "@/lib/data";
 import Link from "next/link";
@@ -20,7 +21,9 @@ export default async function Page(props: {
 
   return (
     <div>
-      Content Page
+      <h1 className={`${lusitana.className} mb-8 text-xl md:text-2xl`}>
+        Content Page
+      </h1>
       <div className="mt-4 flex items-center justify-between gap-2 md:mt-8">
         <Search placeholder="Search invoices..." />
         <CreateContent />
