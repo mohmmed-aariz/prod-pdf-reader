@@ -3,7 +3,7 @@ import { LatestContentSkeleton } from "@/app/ui/agency/dashboard/skeletons";
 import { SubscribersTableSkeleton } from "@/app/ui/agency/subscribers/skeletons";
 import { CardSkeleton, DisplayContentSkeleton, LeftLandingPageSkeleton, TitleSkeleton } from "@/app/ui/skeletons";
 import { getServerSession } from "next-auth";
-import { getToken } from "next-auth/jwt";
+// import { getToken } from "next-auth/jwt";
 
 export default async function Page(){
     const session = getServerSession(NEXT_AUTH);
