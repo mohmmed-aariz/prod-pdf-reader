@@ -113,7 +113,7 @@ export default function EditDocumentForm({
             {/* Document Status */}
             <fieldset>
               <legend className="mb-2 block text-sm font-medium">
-                Set the Document visibility status
+                Document Visibility Status
               </legend>
               <div className="rounded-md border border-gray-200 bg-white px-[14px] py-3">
                 <div className="flex gap-4">
@@ -160,7 +160,7 @@ export default function EditDocumentForm({
             >
               Cancel
             </Link>
-            <Button type="submit" aria-disabled={isPending}>Edit Invoice</Button>
+            <Button type="submit" aria-disabled={isPending}>Edit Content</Button>
           </div>
         </form>
       );
