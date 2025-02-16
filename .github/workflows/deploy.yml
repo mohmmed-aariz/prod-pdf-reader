@@ -43,3 +43,15 @@ jobs:
 
     - name: Verify Pushed Image
       run: docker pull aariz26/prod-pdf-reader:latest  # Replace with your Docker Hub username and repository
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          sudo docker pull aariz26/prod-pdf-reader:latest
+          sudo docker stop prod-pdf-reader || true
+          sudo docker rm prod-pdf-reader || true
+          sudo docker run -d --name prod-pdf-reader -p 3005:3000 aariz26/prod-pdf-reader:latest
