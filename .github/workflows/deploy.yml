@@ -9,6 +9,11 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+
+    env:
+      POSTGRES_PRISMA_URL: ${{ secrets.POSTGRES_PRISMA_URL }}
+      POSTGRES_URL_NON_POOLING: ${{ secrets.POSTGRES_URL_NON_POOLING }}
+      
     steps:
     - name: Check Out Repo
       uses: actions/checkout@v2
