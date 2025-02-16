@@ -18,6 +18,12 @@ jobs:
     - name: Check Out Repo
       uses: actions/checkout@v2
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
     - name: Log in to Docker Hub
       uses: docker/login-action@v1
       with:
@@ -31,6 +37,9 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: aariz26/prod-pdf-reader:latest  # Replace with your Docker Hub username and repository
+        build-args: |
+          POSTGRES_PRISMA_URL=${{ secrets.POSTGRES_PRISMA_URL }}
+          POSTGRES_URL_NON_POOLING=${{ secrets.POSTGRES_URL_NON_POOLING }}
 
     - name: Verify Pushed Image
       run: docker pull aariz26/prod-pdf-reader:latest  # Replace with your Docker Hub username and repository

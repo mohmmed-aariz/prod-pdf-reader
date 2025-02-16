@@ -2,6 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /src/app
 
+# Copy package and other necessary files
 # COPY package.json package-lock.json turbo.json tsconfig.json ./
 
 # COPY apps ./apps
@@ -11,10 +12,16 @@ COPY . .
 
 # Install dependencies
 RUN npm install
-# Can you add a script to the global package.json that does this?
+
+# Set environment variables
+ARG POSTGRES_PRISMA_URL
+ENV POSTGRES_PRISMA_URL=$POSTGRES_PRISMA_URL
+
+# Generate Prisma Client
 RUN npm run db:generate
 
-# Can you filter the build down to just one app?
+# Build the app
 RUN npm run build
 
+# Start the app
 CMD ["npm", "run", "start"]
