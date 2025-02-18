@@ -32,7 +32,7 @@ export default async function LatestDashboardContent() {
                   },
                 )}
               >
-                <div className='flex flex-row justify-start items-center gap-4'>
+                <div className='flex flex-row justify-start items-center gap-4 overflow-hidden'>
 
                 {/* <div className="relative h-40 w-28 flex items-center border-2 border-black"> */}
                 <div className="relative h-40 w-28 flex items-center ">
@@ -56,8 +56,8 @@ export default async function LatestDashboardContent() {
                   )}
                   
                 </div>
-                  <div className="flex flex-col gap-4">
-                    <p className="truncate text-sm font-semibold md:text-base">
+                  <div className="flex flex-col gap-4  ">
+                    <p className="truncate text-sm font-semibold md:text-base hidden sm:block">
                       {document.title}
                     </p>
                     <div className='flex flex-col gap-1'>
@@ -71,12 +71,12 @@ export default async function LatestDashboardContent() {
                   </div>
                 </div>
 
-                <div className='flex flex-col justify-end items-end'>
-                    <p className={`${lusitana.className} truncate text-sm font-medium md:text-base`}>
+                <div className='flex flex-col justify-end items-end '>
+                    <p className={`${lusitana.className} truncate text-sm font-medium md:text-base `}>
                         <span className='text-gray-600'>Total Visits: {"  "}</span>
                         {document.viewCount?.viewCount || 0}
                     </p>
-                    <p className={`${lusitana.className} truncate text-sm font-medium md:text-base`}>
+                    <p className={`${lusitana.className} truncate text-sm font-medium md:text-base `}>
                         <span className='text-gray-600'>Signed Up Visits: {"  "}</span>
 
                         {document._count.viewHistory || 0}

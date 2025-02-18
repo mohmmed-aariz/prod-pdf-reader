@@ -21,6 +21,13 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/user', request.url));
     }
 
+
+    const allowedRoles = ['AGENCY_USER', 'ADMIN'];
+    // Optionally, redirect authenticated users from /agency/signup and /agency/signin to /agency
+    if (token && (pathname.startsWith('/agency/signup') || pathname.startsWith('/agency/signin')) && allowedRoles.includes(token.role.toString())) {
+        return NextResponse.redirect(new URL('/agency', request.url));
+    }
+
     // Allow access to /agency/signup and /agency/signin without authentication
     if (pathname.startsWith('/agency/signup') || pathname.startsWith('/agency/signin')) {
         return NextResponse.next();
@@ -32,7 +39,7 @@ export async function middleware(request: NextRequest) {
     }
 
     // Check if the user role is 'AGENCY_USER' or 'ADMIN'
-    const allowedRoles = ['AGENCY_USER', 'ADMIN'];
+    // const allowedRoles = ['AGENCY_USER', 'ADMIN'];
     if (token && pathname.startsWith('/agency') && !allowedRoles.includes(token.role.toString())) {
         return NextResponse.redirect(new URL('/agency/signin', request.url));
     }
