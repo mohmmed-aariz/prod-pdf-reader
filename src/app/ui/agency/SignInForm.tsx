@@ -54,8 +54,13 @@ export default function SigninForm() {
             // console.error(result.error);
         }  else {
             if(result?.url){
-                router.push(result?.url);// Redirects to the callbackUrl
+              console.log("Route redirect ", result.url)
+              router.push(result?.url);// Redirects to the callbackUrl
             }
+        }
+
+        if(result?.ok == true){
+          router.refresh();
         }
     }
 
