@@ -9,7 +9,14 @@ import Appbar from "./Appbar";
 //     '../../../../../node_modules/react-pdf/node_modules/pdfjs-dist/build/pdf.worker.min.js',
 //     import.meta.url,
 //   ).toString();
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
+
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+    // 'pdfjs-dist/build/pdf.worker.min.mjs',
+    "../../../../../node_modules/pdfjs-dist/build/pdf.worker.min.js",
+    import.meta.url,
+  ).toString();
+
+// pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js`;
 
 
 export default function CombinedDisplay( {pdfAppUrl, totalPages, pdfPagesUrl, title, fileId}: {
